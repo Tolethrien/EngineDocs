@@ -1,0 +1,19 @@
+---
+type Colors = "red" | "yellow" | "green" | "blue";
+interface Props {
+  color?: Colors;
+  text?: string;
+}
+const { color = "red", text = "text" } = Astro.props;
+const colorToClass: { [color in Colors]: { bg: string; shadow: string } } = {
+  red: { bg: "bg-red-400", shadow: "border-rose-700" },
+  yellow: { bg: "bg-amber-400", shadow: "border-yellow-700" },
+  green: { bg: "bg-green-400", shadow: "border-emerald-700" },
+  blue: { bg: "bg-blue-400", shadow: "border-sky-700" },
+};
+---
+
+<span
+  class={`${colorToClass[color].bg} ${colorToClass[color].shadow} bg-opacity-70 rounded px-2 pb-[1px] border-b-2 shadow-md font-medium text-base `}
+  >{text}</span
+>

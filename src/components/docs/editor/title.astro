@@ -1,0 +1,24 @@
+---
+import Link from "./link.astro";
+
+interface Props {
+  ref?: string;
+}
+const { ref } = Astro.props;
+const shortLink = ref?.slice(8, 19) + "..." + ref?.slice(63, ref.length);
+---
+
+<header class="py-4">
+  <h1 class="text-5xl font-black text-slate-200">
+    <slot />
+  </h1>
+  {
+    ref && (
+      <a href={ref} target="_blank" rel="noopener noreferrer">
+        <code class="bg-blue-600 bg-opacity-50 decoration-red-500 font-semibold w-fit px-[2px] rounded-sm underline underline-offset-2 cursor-pointer shadow-md">
+          {shortLink}
+        </code>
+      </a>
+    )
+  }
+</header>

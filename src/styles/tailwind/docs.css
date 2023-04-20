@@ -1,0 +1,47 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .note {
+    @apply border-yellow-300 border-y-indigo-800 border-r-indigo-800 bg-blue-900 text-yellow-300;
+  }
+  .noteIcon {
+    @apply stroke-yellow-300;
+  }
+  .warning {
+    @apply border-y-rose-800 border-l-rose-300 border-r-rose-800  bg-rose-700 text-rose-300;
+  }
+  .warningIcon {
+    @apply bg-rose-300 bg-opacity-50;
+  }
+  .codeHighliteWarning {
+    @apply bg-red-400 bg-opacity-20;
+  }
+  .codeHighliteSucces {
+    @apply bg-green-400 bg-opacity-20;
+  }
+  .codeHighliteNeutral {
+    @apply bg-yellow-400 bg-opacity-20;
+  }
+  .wordHighlight {
+    @apply bg-purple-400 bg-opacity-20;
+  }
+}
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background: #1f242c;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #92007a;
+    border-radius: 5px;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #c0a0b9;
+  }
+}

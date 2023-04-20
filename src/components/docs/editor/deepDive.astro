@@ -1,0 +1,62 @@
+---
+import ArrowDownIcon from "../../../icons/arrowDownIcon.astro";
+interface Props {
+  desc: string;
+}
+const { desc } = Astro.props;
+---
+
+<deep-dive class="mx-auto my-4 block w-3/4">
+  <details
+    class="relative h-fit rounded-lg border-2 border-indigo-100 border-opacity-10 bg-indigo-900"
+  >
+    <summary class="grid gap-1 px-6 pb-4">
+      <p class="flex gap-2 py-2 text-2xl font-bold text-indigo-200">
+        <svg viewBox="0 0 24 24" width="1.5rem" class="fill-indigo-200"
+          ><g stroke-width="0"></g><g
+            stroke-linecap="round"
+            stroke-linejoin="round"></g><g
+            ><path
+              d="M9 13h4v1H9zm13 7h-3v3H5.75A3.754 3.754 0 0 1 2 19.25V3.5C2 2.051 3.437 1 5.417 1H22zM18 6H5.416A4.175 4.175 0 0 1 3 5.318V19.25A2.753 2.753 0 0 0 5.75 22H18zm3-4H5.416C4.04 2 3 2.645 3 3.5S4.04 5 5.417 5H19v14h2zm-6 8H7v1h8z"
+            ></path><path fill="none" d="M0 0h24v24H0z"></path></g
+          ></svg
+        >
+        Get More!
+      </p>
+      <p class="pb-4 text-xl font-bold text-slate-200">
+        {desc}
+      </p>
+      <button
+        class="flex w-32 items-center justify-center gap-2 rounded-lg bg-indigo-400 py-2 hover:bg-slate-600"
+      >
+        <ArrowDownIcon />
+        <span class="text-white">Show</span>
+      </button>
+    </summary>
+    <div class="h-[1px] w-full bg-indigo-100 bg-opacity-10"></div>
+    <div class="m-auto h-80 w-[95%] py-2">
+      <slot />
+    </div>
+  </details>
+</deep-dive>
+
+<script>
+  class DeepDiveTag extends HTMLElement {
+    constructor() {
+      super();
+      const deepDiveButton = this.querySelector("button");
+      const deepDiveDetails = this.querySelector("details");
+      const deepDivesvg = this.querySelectorAll("svg")[1];
+      const deepDiveButtonText = this.querySelector("span");
+
+      deepDiveButton?.addEventListener("click", () => {
+        let isOpen = deepDiveDetails?.hasAttribute("open") ?? false;
+        deepDiveButtonText &&
+          (deepDiveButtonText.innerText = !isOpen ? "Hide" : "Show");
+        deepDivesvg?.classList.toggle("rotate-180");
+        deepDiveDetails?.toggleAttribute("open");
+      });
+    }
+  }
+  customElements.define("deep-dive", DeepDiveTag);
+</script>

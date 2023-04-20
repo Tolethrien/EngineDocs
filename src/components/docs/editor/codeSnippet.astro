@@ -1,0 +1,104 @@
+---
+import { Code } from "astro/components";
+interface Props {
+  code: string;
+  lineNeutral?: string;
+  lineWarning?: string;
+  lineSucces?: string;
+  wordMark?: string[];
+  fileName?: string;
+}
+const { code, lineNeutral, lineSucces, lineWarning, wordMark, fileName } =
+  Astro.props;
+
+const lineMarker = (str: string | undefined): number[] | undefined => {
+  const singleDigit = /^\d$/;
+  if (!str) return undefined;
+  if (str.includes(",")) {
+    return str.split(",").map(Number);
+  } else if (str.includes("-")) {
+    let arr = str.split("-").map(Number);
+    let finaleArr = [];
+    for (let i = arr[0]; i <= arr[1]; i++) {
+      finaleArr.push(i);
+    }
+    return finaleArr;
+  } else if (singleDigit.test(str)) {
+    return [Number(str)];
+  }
+};
+
+const natural = lineMarker(lineNeutral);
+const warn = lineMarker(lineWarning);
+const succes = lineMarker(lineSucces);
+---
+
+<div class="my-4 ml-3">
+  {
+    fileName && (
+      <div class="ml-2 w-fit rounded-t border border-blue-950 bg-gray-800 px-2 text-yellow-50">
+        {fileName}
+      </div>
+    )
+  }
+  <div class="h-fit w-full rounded-md border border-gray-600 bg-gray-800 p-6">
+    <code-snippet
+      data-lines-warn={warn}
+      data-lines-succes={succes}
+      data-lines-neutral={natural}
+      data-word-mark={wordMark ?? undefined}
+    >
+      <Code code={code} lang={"javascript"} theme={"dark-plus"} />
+    </code-snippet>
+  </div>
+</div>
+
+<script>
+  class CodeSnippet extends HTMLElement {
+    constructor() {
+      super();
+      const code = this.querySelector("code");
+      const linesHighlight = [
+        this.getAttribute("data-lines-warn")?.split(",").map(Number),
+        this.getAttribute("data-lines-succes")?.split(",").map(Number),
+        this.getAttribute("data-lines-neutral")?.split(",").map(Number),
+      ];
+      let highlitedClass = [
+        "codeHighliteWarning",
+        "codeHighliteSucces",
+        "codeHighliteNeutral",
+      ];
+      const highlitedWord = ["warningIcon"];
+      const wordMarker = this.getAttribute("data-word-mark")?.split(",");
+      const wordToMark = wordMarker?.map((e) => e.split("-"));
+      //find and mark lines with specific color
+      code &&
+        linesHighlight.forEach(
+          (attribute, attributeIndex) =>
+            attribute &&
+            Array.from(code.children).forEach(
+              (child, childIndex) =>
+                attribute.includes(childIndex + 1) &&
+                child.classList.add(highlitedClass[attributeIndex])
+            )
+        );
+
+      //find and highlight words:
+      // "1-Player-WordBlue" turns into mark = [1,Player,WordBlue]
+      // for each code children(span line) find line specify in mark[0] (line number)
+      // and then loop throu all of this line children to find span
+      // that is equal to mark[1] (word) and then highlight that word by adding class mark[2] to it
+      code &&
+        wordToMark?.forEach((mark) =>
+          Array.from(
+            Array.from(code.children)[Number(mark[0]) - 1].children
+          ).forEach((element) => {
+            let span = element as HTMLSpanElement;
+            span.innerText === mark[1] &&
+              span.classList.add(highlitedWord.find((e) => e === mark[2])!);
+          })
+        );
+    }
+  }
+  customElements.define("code-snippet", CodeSnippet);
+</script>

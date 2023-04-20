@@ -1,0 +1,69 @@
+---
+import ArrowDownIcon from "../../../icons/arrowDownIcon.astro";
+interface Props {
+  codeName: string;
+  title?: string;
+  desc?: string;
+}
+const {
+  codeName,
+  title = "Playground",
+  desc = "test you skills here",
+} = Astro.props;
+const iframe = `<iframe
+      src="https://codesandbox.io/embed/${codeName}?fontsize=14&forcerefresh=1&hidenavigation=1&theme=dark&codemirror=1"
+          style="width:100%; height:100%; border:0; border-radius: 4px; overflow:hidden;"
+          title="${codeName}"
+          sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+        ></iframe>`;
+---
+
+<play-ground class="my-4 block w-full">
+  <details
+    class="relative h-fit rounded-lg border-2 border-cyan-100 border-opacity-10 bg-cyan-900"
+  >
+    <summary class="grid gap-1 px-6 py-2">
+      <p class="text-2xl font-bold text-cyan-200">{title}</p>
+      <p class="text-xl font-bold text-slate-200">
+        {desc}
+      </p>
+      <button
+        class="flex w-fit items-center gap-1 rounded-lg bg-cyan-500 px-4 py-2 hover:bg-slate-600"
+      >
+        <ArrowDownIcon />
+        <span class="text-white">Open Playground</span>
+      </button>
+    </summary>
+    <div class="h-[1px] w-full bg-cyan-600 bg-opacity-20"></div>
+    <div class="relative m-auto h-96 w-[90%] py-2" data-iframe={iframe}></div>
+  </details>
+</play-ground>
+
+<script>
+  class Playground extends HTMLElement {
+    constructor() {
+      super();
+      const playgroundButton = this.querySelector("button");
+      const playgroundDetails = this.querySelector("details");
+      const playgroundsvg = this.querySelector("svg");
+      const playgroundButtonText = this.querySelector("span");
+      const iframeWrap = this.querySelector("[data-iframe]")!;
+      playgroundButton?.addEventListener("click", () => {
+        let isOpen = playgroundDetails?.hasAttribute("open") ?? false;
+        playgroundButtonText &&
+          (playgroundButtonText.innerText = !isOpen
+            ? "Close Playground"
+            : "Open Playground");
+
+        playgroundsvg?.classList.toggle("rotate-180");
+        iframeWrap &&
+          (iframeWrap.innerHTML =
+            iframeWrap.innerHTML === ""
+              ? iframeWrap.getAttribute("data-iframe")!
+              : "");
+        playgroundDetails?.toggleAttribute("open");
+      });
+    }
+  }
+  customElements.define("play-ground", Playground);
+</script>

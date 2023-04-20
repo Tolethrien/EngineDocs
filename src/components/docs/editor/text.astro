@@ -1,0 +1,40 @@
+---
+type TextColor = "red" | "yellow" | "green" | "blue" | "inherit" | "base";
+type FontSize = "sm" | "lg" | "xl" | "2xl" | "normal";
+type FontWeight = "400" | "500" | "600" | "700" | "800";
+interface Props {
+  color?: TextColor;
+  size?: FontSize;
+  weight?: FontWeight;
+}
+const { color = "inherit", size = "normal", weight = "400" } = Astro.props;
+
+const textColorClass: { [color in TextColor]: string } = {
+  red: "text-red-300",
+  yellow: "text-yellow-600",
+  green: "text-green-300",
+  blue: "text-blue-300",
+  inherit: "text-inherit",
+  base: "text-white",
+};
+const textSizeClass: { [size in FontSize]: string } = {
+  sm: "text-sm",
+  lg: "text-lg",
+  xl: "text-xl",
+  "2xl": "text-2xl",
+  normal: "text-base",
+};
+const textWeightClass: { [weight in FontWeight]: string } = {
+  "400": "font-normal",
+  "500": "text-medium",
+  "600": "text-semibold",
+  "700": "text-bold",
+  "800": "text-extrabold",
+};
+---
+
+<p
+  class={`${textColorClass[color]} ${textSizeClass[size]} ${textWeightClass[weight]} py-2`}
+>
+  <slot />
+</p>

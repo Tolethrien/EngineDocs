@@ -1,0 +1,128 @@
+---
+import CodeSnippet from "../../components/docs/editor/codeSnippet.astro";
+import Description from "../../components/docs/editor/description.astro";
+import Highlighted from "../../components/docs/editor/highlighted.astro";
+import Link from "../../components/docs/editor/link.astro";
+import Title from "../../components/docs/editor/title.astro";
+import Section from "../../components/docs/editor/section.astro";
+import Text from "../../components/docs/editor/text.astro";
+import DocsLayout from "../../layouts/docsLayout.astro";
+import { codet, codeb, active } from "../../components/docs/editor/codes.astro";
+import DeepDive from "../../components/docs/editor/deepDive.astro";
+import Heading from "../../components/docs/editor/heading.astro";
+import Note from "../../components/docs/editor/note.astro";
+import Playground from "../../components/docs/editor/playground.astro";
+import Navigation from "../../components/docs/editor/navigation.astro";
+---
+
+<DocsLayout pageName="Engine">
+  <Title
+    ref="https://github.com/Tolethrien/JS_game_engine_proto/blob/develop/src/Engine/Fragment/Plugins/hitbox.js"
+  >
+    Hitboxes
+  </Title>
+
+  <Description>
+    <Highlighted text={"Hitbox"} color={"blue"} /> to niewidzialny prostokąt który
+    działa jako Trigger dla eventów. Dodanie go do obiektów pozwala na aktywowanie
+    specyficznych akcji na bazie tego czy inny obiekt znajduje się w jego dystansie
+  </Description>
+
+  <Section
+    title="Constructor"
+    desc="Htibox dodawany jest jako plugin do twojego komponentu na bazie fragmentu"
+  >
+    By dodać nowy komponent używamy wbudowanej opcji
+    <Link ref="#ankor">this.attachComponent</Link>
+    <Highlighted text={"this.attachComponent"} /> z wartością <Highlighted
+      text={"hitbox"}
+      color={"blue"}
+    />
+    <CodeSnippet
+      code={codet}
+      lineSucces={"4"}
+      wordMark={["1-Player-warningIcon", "2-constructor-warningIcon"]}
+      fileName="Player.js"
+    />
+    <Text>
+      Po dodaniu go do <Link ref="">Fragment</Link> można wywoływać go za pomoca
+      komendy <Highlighted text={"this.hitboxes"} color={"red"} />
+    </Text>
+    <CodeSnippet code="this.hitboxes.addHitbox()" />
+    <br />
+    <DeepDive desc="Know more about hitboxes under the hood">
+      asdassdasd
+    </DeepDive>
+  </Section>
+
+  <Section title="Options">
+    <CodeSnippet code={codeb} fileName="Player.js" />
+    <Text>
+      <Highlighted text={"name"} /> - name is your name of a new created hitbox,
+      you will be using this name to target specific hitboxes
+    </Text>
+    <Text>
+      <Highlighted text={"offset"} /> - offset is basic shape of a hitbox, is messured
+      from center point of a sprite and has a rectangle shape
+    </Text>
+    <Text>
+      <Highlighted text={"active"} /> - active is boolean that control that hitbox
+      should be activeted on contact
+    </Text>
+    <Text>
+      pod maską kazyd nowy tak dodany hitbox dodaje sie do listy hitboxow
+      komponentu, i moze byc zazanaczany i wywoływany a pomocą nadanego mu iD w
+      postacie nazwy
+    </Text>
+  </Section>
+
+  <Section title="Function" desc="opis opcji">
+    <Heading>Dodawanie</Heading>
+    <Text>by dodac nowy hitbox wywołujemy</Text>
+    <CodeSnippet code={codeb} />
+    <Text>
+      <Highlighted text={"name"} /> - name is your name of a new created hitbox,
+      you will be using this name to target specific hitboxes
+    </Text>
+    <Text>
+      <Highlighted text={"offset"} /> - offset is basic shape of a hitbox, is messured
+      from center point of a sprite and has a rectangle shape
+    </Text>
+    <Text>
+      <Highlighted text={"active"} /> - active is boolean that control that hitbox
+      should be activeted on contact
+    </Text>
+    <Heading>Usuwanie</Heading>
+    <Text>by usunac wczesniej dodany hitbox należy wywołac funkcje</Text>
+    <CodeSnippet code={`this.hitboxes.remove(name)`} />
+    <Note title="remember" type={"note"}>
+      <Text color={"base"}>
+        Nalezy jednak pamietac ze wszystkie powiazane z nim funkcje i triggery
+        przestana dzialac wrac z jego usunieciem oraz nie będzie można ich
+        przypisać na nowo
+      </Text>
+    </Note>
+    <Heading>Activate</Heading>
+    <Text>aktywowanie/deaktywowanie opiera sie na wywołaniu fukncji</Text>
+    <CodeSnippet code={active} />
+    <Text>
+      <Highlighted text={"hitbox"} /> - id(nazwa) hitboxa ktory chcemy użyć
+    </Text>
+    <Text>
+      <Highlighted text={"value"} /> - true/false w zaleznosci czy chcemy go aktywoac
+      czy deaktywowac
+    </Text>
+  </Section>
+  <!-- <DeepDive>asdassdasd</DeepDive> -->
+  <Section title="Test what you learn">
+    <Playground
+      codeName="pensive-morning-heb9jd"
+      title="Hitboxes Area"
+      desc="add some hitboxes and test how they will react with the world"
+    />
+  </Section>
+  <Navigation
+    prev={{ name: "Fragment", link: "d" }}
+    next={{ name: "Fragment Plugins", link: "d" }}
+  />
+</DocsLayout>

@@ -1,0 +1,80 @@
+---
+interface Props {
+  type: infoType;
+  title: string;
+}
+type infoType = "note" | "warning";
+interface IconType {
+  pathA: string;
+  widthA: string;
+  pathB: string;
+  widthB: string;
+  color: string;
+}
+type Icons = { [key in infoType]: IconType };
+
+const { title, type } = Astro.props;
+
+const icons: Icons = {
+  warning: {
+    pathA:
+      "M12 15H12.01M12 12V9M4.98207 19H19.0179C20.5615 19 21.5233 17.3256 20.7455 15.9923L13.7276 3.96153C12.9558 2.63852 11.0442 2.63852 10.2724 3.96153L3.25452 15.9923C2.47675 17.3256 3.43849 19 4.98207 19Z",
+    widthA: "2",
+    pathB: "",
+    widthB: "0",
+    color: "stroke-rose-300",
+  },
+  note: {
+    pathA:
+      "M0 4.75C0 3.784.784 3 1.75 3h20.5c.966 0 1.75.784 1.75 1.75v14.5A1.75 1.75 0 0122.25 21H1.75A1.75 1.75 0 010 19.25V4.75zm1.75-.25a.25.25 0 00-.25.25v14.5c0 .138.112.25.25.25h20.5a.25.25 0 00.25-.25V4.75a.25.25 0 00-.25-.25H1.75z",
+    widthA: "1.5",
+    pathB:
+      "M5 8.75A.75.75 0 015.75 8h11.5a.75.75 0 010 1.5H5.75A.75.75 0 015 8.75zm0 4a.75.75 0 01.75-.75h5.5a.75.75 0 010 1.5h-5.5a.75.75 0 01-.75-.75z",
+    widthB: "1.5",
+    color: "stroke-purple-300",
+  },
+};
+const styleClass = {
+  note: "bg-purple-700 text-purple-300 border-l-purple-300 border-purple-600",
+  warning:
+    "bg-rose-700 text-rose-300 border-l-rose-300  border-r-rose-900 border-y-rose-900",
+};
+---
+
+<div
+  class={`${styleClass[type]} mx-auto rounded-lg p-4 w-3/4 h-fit border-l-8 border-y-2 border-r-2`}
+>
+  <h2 class={`flex gap-2 text-lg font-bold items-center`}>
+    <svg
+      class={icons[type].color}
+      viewBox="0 0 24 24"
+      width={"1.5rem"}
+      fill="none"
+    >
+      <g stroke-width="0"></g>
+      <g stroke-linecap="round" stroke-linejoin="round"></g>
+      <g>
+        <path
+          fill-rule="evenodd"
+          stroke-width={icons[type].widthA}
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d={icons[type].pathA}
+        >
+        </path>
+        <path
+          fill-rule="evenodd"
+          stroke-width={icons[type].widthB}
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d={icons[type].pathB}
+        >
+        </path>
+      </g>
+    </svg>
+    {title}
+  </h2>
+  <p class="text-base font-medium text-white">
+    <slot />
+  </p>
+</div>

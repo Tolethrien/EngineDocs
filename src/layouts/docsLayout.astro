@@ -1,0 +1,31 @@
+---
+import "../styles/astro/global.astro";
+import "../styles/tailwind/docs.css";
+
+interface Props {
+  pageName: string;
+}
+const { pageName } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Docs/{pageName}</title>
+  </head>
+  <body class="bg-slate-800 text-slate-100 scrollbar">
+    <main>
+      <aside class="fixed w-52 h-full bg-indigo-900">
+        DOCS
+        <p>Quick Search</p>
+        <input />
+      </aside>
+      <div class="ml-52 px-24">
+        <slot />
+      </div>
+    </main>
+  </body>
+</html>
