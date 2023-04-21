@@ -1,4 +1,8 @@
 ---
+import Category from "../components/docs/sidebar/category.astro";
+import Page from "../components/docs/sidebar/page.astro";
+import SearchBox from "../components/docs/sidebar/searchBox.astro";
+import TableOfContents from "../components/docs/sidebar/tableOfContents.astro";
 import "../styles/astro/global.astro";
 import "../styles/tailwind/docs.css";
 
@@ -16,14 +20,15 @@ const { pageName } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>Docs/{pageName}</title>
   </head>
-  <body class="bg-slate-800 text-slate-100 scrollbar">
+  <body class="scrollbar bg-slate-800 text-slate-100">
     <main>
-      <aside class="fixed w-52 h-full bg-indigo-900">
-        DOCS
-        <p>Quick Search</p>
-        <input />
+      <aside class="fixed bottom-0 h-full w-52 overflow-hidden bg-DocsContents">
+        <p class="pt-4 text-center text-4xl font-extrabold">ENGINE</p>
+        <p class="pb-4 text-center text-2xl font-extrabold">DOCS</p>
+        <SearchBox />
+        <TableOfContents />
       </aside>
-      <div class="ml-52 px-24">
+      <div class="ml-52 mr-12 px-24 pt-8">
         <slot />
       </div>
     </main>

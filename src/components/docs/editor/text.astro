@@ -7,7 +7,7 @@ interface Props {
   size?: FontSize;
   weight?: FontWeight;
 }
-const { color = "inherit", size = "normal", weight = "400" } = Astro.props;
+const { color = "inherit", size = "normal", weight = "500" } = Astro.props;
 
 const textColorClass: { [color in TextColor]: string } = {
   red: "text-red-300",
@@ -26,10 +26,10 @@ const textSizeClass: { [size in FontSize]: string } = {
 };
 const textWeightClass: { [weight in FontWeight]: string } = {
   "400": "font-normal",
-  "500": "text-medium",
-  "600": "text-semibold",
-  "700": "text-bold",
-  "800": "text-extrabold",
+  "500": "font-medium",
+  "600": "font-semibold",
+  "700": "font-bold",
+  "800": "font-extrabold",
 };
 ---
 
