@@ -10,11 +10,13 @@ const externalLink = external
   : {};
 ---
 
-<a href={ref} {...externalLink} class="relative">
-  <svg
-    viewBox="0 0 20 20"
-    width="1rem"
-    class="absolute right-[0.35rem] top-[50%] translate-y-[-50%] fill-red-500"
+<a href={ref} {...externalLink} class="inline-flex gap-1">
+  <span
+    class="cursor-pointer rounded-sm px-[2px] font-semibold underline decoration-red-500 underline-offset-2"
+  >
+    <slot /></span
+  >
+  <svg viewBox="0 0 20 20" width="1rem" class="fill-red-500"
     ><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"
     ></g><g>
       <g stroke="none" stroke-width="1" fill-rule="evenodd">
@@ -28,12 +30,6 @@ const externalLink = external
         </g>
       </g>
     </g></svg
-  >
-
-  <span
-    class="cursor-pointer rounded-sm px-[2px] pr-5 font-semibold underline decoration-red-500 underline-offset-2"
-  >
-    <slot /></span
   >
 </a>
 {br && <br />}

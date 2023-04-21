@@ -47,4 +47,20 @@
   .scrollbar::-webkit-scrollbar-thumb:hover {
     background: #c0a0b9;
   }
+  .navGradient {
+    background: linear-gradient(
+      306deg,
+      rgb(23, 8, 33) 0%,
+      rgb(18, 20, 34) 50%,
+      rgb(45, 7, 70) 100%
+    );
+  }
+  .bodyGradient {
+    background: linear-gradient(
+      306deg,
+      rgb(47, 27, 60) 0%,
+      rgb(33, 35, 49) 50%,
+      rgb(30, 12, 43) 100%
+    );
+  }
 }
