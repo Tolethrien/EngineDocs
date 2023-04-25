@@ -8,14 +8,14 @@ const { ref } = Astro.props;
 const shortLink = ref?.slice(8, 19) + "..." + ref?.slice(63, ref.length);
 ---
 
-<header class="py-4">
+<header class="overflow-x-hidden text-ellipsis py-4">
   <h1 class="text-5xl font-black text-slate-200">
     <slot />
   </h1>
   {
     ref && (
       <a href={ref} target="_blank" rel="noopener noreferrer">
-        <code class="bg-blue-600 bg-opacity-50 decoration-red-500 font-semibold w-fit px-[2px] rounded-sm underline underline-offset-2 cursor-pointer shadow-md">
+        <code class="w-fit cursor-pointer rounded-sm bg-blue-600 bg-opacity-50 px-[2px] font-semibold underline decoration-red-500 underline-offset-2 shadow-md">
           {shortLink}
         </code>
       </a>
