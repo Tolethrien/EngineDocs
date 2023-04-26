@@ -13,7 +13,7 @@ const {
 const iframe = `<iframe
       src="https://codesandbox.io/embed/${codeName}?fontsize=14&forcerefresh=1&hidenavigation=1&theme=dark&codemirror=1"
           title="${codeName}"
-          class="w-full h-full rounded-md overflow-hidden"
+          class="w-full h-full rounded-md overflow-hidden pointer-events-auto"
           sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
         ></iframe>`;
 ---
@@ -31,7 +31,7 @@ const iframe = `<iframe
         class="pointer-events-auto flex w-fit items-center gap-1 rounded-lg bg-cyan-500 px-4 py-2 hover:bg-slate-600"
       >
         <ArrowDownIcon />
-        <span class="text-white">sOpen Playground</span>
+        <span class="text-white">Open Playground</span>
       </button>
     </summary>
     <div class="h-[1px] w-full bg-cyan-600 bg-opacity-20"></div>
@@ -41,7 +41,6 @@ const iframe = `<iframe
     <div class="relative m-auto h-80 w-full p-2" data-iframe={iframe}></div>
   </details>
 </play-ground>
-
 <script>
   class Playground extends HTMLElement {
     constructor() {

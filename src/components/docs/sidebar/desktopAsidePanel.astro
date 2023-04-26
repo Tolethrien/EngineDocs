@@ -1,0 +1,21 @@
+---
+import SearchBox from "./searchBox.astro";
+import TableOfContents from "./tableOfContents.astro";
+---
+
+<aside
+  class="bodyGradient fixed bottom-0 hidden h-full w-52 overflow-hidden md:block"
+>
+  <h1 class="pt-4 text-center text-4xl font-extrabold">
+    <a href="/"> ENGINE</a>
+  </h1>
+  <h2 class="pb-4 text-center text-2xl font-extrabold">DOCS</h2>
+  <nav class="h-full">
+    <SearchBox />
+    <ul
+      class="scrollbar scrollbarSide h-[calc(100%-12rem)] overflow-y-auto py-4"
+    >
+      <TableOfContents />
+    </ul>
+  </nav>
+</aside>

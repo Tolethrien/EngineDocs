@@ -1,6 +1,6 @@
 ---
-import SearchBox from "../components/docs/sidebar/searchBox.astro";
-import TableOfContents from "../components/docs/sidebar/tableOfContents.astro";
+import MobileTopBar from "../components/docs/mobileBar/mobileTopBar.astro";
+import DesktopAsidePanel from "../components/docs/sidebar/desktopAsidePanel.astro";
 import "../styles/astro/global.astro";
 import "../styles/tailwind/docs.css";
 
@@ -19,70 +19,10 @@ const { pageName } = Astro.props;
     <title>Docs/{pageName}</title>
   </head>
   <body class="scrollbar navGradient text-slate-100">
-    <div class="relative flex items-center justify-between p-4 md:hidden">
-      <div class="relative">
-        <h1 class="text-center text-2xl font-extrabold">
-          <a href="/"> ENGINE</a>
-        </h1>
-        <h2
-          class="absolute right-[-30%] top-[70%] text-center text-lg font-extrabold"
-        >
-          DOCS
-        </h2>
-      </div>
-      <svg
-        id="sdsdsds"
-        viewBox="0 0 24 24"
-        fill="none"
-        class="w-12 fill-white stroke-white"
-        ><g stroke-width="0"></g><g
-          stroke-linecap="round"
-          stroke-linejoin="round"></g><g>
-          <g>
-            <path
-              d="M5 17H19M5 12H19M5 7H19"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
-          </g>
-        </g></svg
-      >
-      <div
-        id="cdcdcdc"
-        class="absolute top-full z-10 h-0 w-[90%] bg-slate-500 transition-all"
-      >
-        <ul id="gg" class="scrollbar scrollbarSide h-full overflow-y-auto">
-          <TableOfContents />
-        </ul>
-      </div>
-    </div>
-    <aside
-      class="bodyGradient fixed bottom-0 hidden h-full w-52 overflow-hidden md:block"
-    >
-      <h1 class="pt-4 text-center text-4xl font-extrabold">
-        <a href="/"> ENGINE</a>
-      </h1>
-      <h2 class="pb-4 text-center text-2xl font-extrabold">DOCS</h2>
-      <nav class="h-full">
-        <SearchBox />
-        <ul
-          class="scrollbar scrollbarSide h-[calc(100%-12rem)] overflow-y-auto py-4"
-        >
-          <TableOfContents />
-        </ul>
-      </nav>
-    </aside>
-    <main class="px-8 pt-8 md:ml-52 md:mr-12 md:px-24">
+    <MobileTopBar />
+    <DesktopAsidePanel />
+    <main class="px-4 pt-24 md:pl-56 md:pr-4 lg:pl-72 lg:pr-16">
       <slot />
     </main>
   </body>
 </html>
-<script>
-  const sd = document.getElementById("sdsdsds")!;
-  const cd = document.getElementById("cdcdcdc")!;
-  const gg = document.getElementById("gg")!;
-  sd.addEventListener("click", () => {
-    cd.classList.toggle("h-96");
-    gg.classList.toggle("py-4");
-  });
-</script>

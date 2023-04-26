@@ -1,0 +1,55 @@
+---
+import SearchBox from "../sidebar/searchBox.astro";
+import TableOfContents from "../sidebar/tableOfContents.astro";
+---
+
+<div
+  class="bodyGradient fixed z-10 flex w-full items-center justify-between bg-black p-4 shadow-md shadow-orange-200 md:hidden"
+>
+  <div class="relative">
+    <h1 class="-mt-[1.2rem] text-center text-2xl font-extrabold">
+      <a href="/"> ENGINE</a>
+    </h1>
+    <h2
+      class="absolute right-[-30%] top-[0.2rem] text-center text-lg font-extrabold"
+    >
+      DOCS
+    </h2>
+  </div>
+  <div class="flex gap-4">
+    <SearchBox />
+    <svg
+      id="sdsdsds"
+      viewBox="0 0 24 24"
+      fill="none"
+      class="w-12 fill-white stroke-white"
+      ><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"
+      ></g><g>
+        <g>
+          <path
+            d="M5 17H19M5 12H19M5 7H19"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </g>
+      </g></svg
+    >
+  </div>
+  <div
+    id="cdcdcdc"
+    class="bodyGradient absolute left-[5%] top-full h-0 w-[90%] transition-all"
+  >
+    <ul id="gg" class="scrollbar scrollbarSide h-full overflow-y-auto">
+      <TableOfContents />
+    </ul>
+  </div>
+</div>
+<script>
+  const sd = document.getElementById("sdsdsds")!;
+  const cd = document.getElementById("cdcdcdc")!;
+  const gg = document.getElementById("gg")!;
+  sd.addEventListener("click", () => {
+    cd.classList.toggle("h-96");
+    gg.classList.toggle("py-4");
+  });
+</script>
