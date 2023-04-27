@@ -15,7 +15,7 @@ const shortLink = ref?.slice(8, 19) + "..." + ref?.slice(63, ref.length);
   {
     ref && (
       <a href={ref} target="_blank" rel="noopener noreferrer">
-        <code class="w-fit cursor-pointer rounded-sm bg-blue-600 bg-opacity-50 px-[2px] font-semibold underline decoration-red-500 underline-offset-2 shadow-md">
+        <code class="w-fit cursor-pointer rounded-sm bg-fuchsia-800 bg-opacity-40 px-[2px] font-semibold underline decoration-red-500 underline-offset-2 shadow-md">
           {shortLink}
         </code>
       </a>

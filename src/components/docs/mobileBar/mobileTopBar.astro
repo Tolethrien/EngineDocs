@@ -4,8 +4,13 @@ import TableOfContents from "../sidebar/tableOfContents.astro";
 ---
 
 <div
-  class="bodyGradient fixed z-10 flex w-full items-center justify-between bg-black p-4 shadow-md shadow-orange-200 md:hidden"
+  class="bodyGradient shadow-m fixed z-10 flex w-full items-center justify-between bg-black p-4 md:hidden"
 >
+  <div
+    id="mobileBarBlur"
+    class="fixed left-0 top-[5.2rem] hidden h-screen w-full bg-black bg-opacity-5 backdrop-blur-md"
+  >
+  </div>
   <div class="relative">
     <h1 class="-mt-[1.2rem] text-center text-2xl font-extrabold">
       <a href="/"> ENGINE</a>
@@ -37,9 +42,16 @@ import TableOfContents from "../sidebar/tableOfContents.astro";
   </div>
   <div
     id="cdcdcdc"
-    class="bodyGradient absolute left-[5%] top-full h-0 w-[90%] transition-all"
+    class="bodyGradient absolute left-[5%] top-full h-0 w-[90%] rounded-b-md shadow-lg transition-all"
   >
     <ul id="gg" class="scrollbar scrollbarSide h-full overflow-y-auto">
+      <div
+        class="mb-4 flex flex-col items-center border-b-2 border-pink-200 py-4 text-lg font-extrabold"
+      >
+        <a href="/tutorials/gettingStarted/gettingStarted">Getting started</a>
+        <a href="/docs/engine/options">Docs</a>
+        <a href="/showcase/start">Showcase</a>
+      </div>
       <TableOfContents />
     </ul>
   </div>
@@ -48,8 +60,10 @@ import TableOfContents from "../sidebar/tableOfContents.astro";
   const sd = document.getElementById("sdsdsds")!;
   const cd = document.getElementById("cdcdcdc")!;
   const gg = document.getElementById("gg")!;
+  const bl = document.getElementById("mobileBarBlur")!;
   sd.addEventListener("click", () => {
     cd.classList.toggle("h-96");
     gg.classList.toggle("py-4");
+    bl.classList.toggle("hidden");
   });
 </script>

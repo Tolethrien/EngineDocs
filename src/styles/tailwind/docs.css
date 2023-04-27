@@ -47,20 +47,21 @@
   .scrollbar::-webkit-scrollbar-thumb:hover {
     background: #c0a0b9;
   }
-  .navGradient {
-    background: linear-gradient(
-      306deg,
-      rgb(23, 8, 33) 0%,
-      rgb(18, 20, 34) 50%,
-      rgb(45, 7, 70) 100%
-    );
-  }
+
   .bodyGradient {
+    /* background-color: #281d31; */
+    background: #0f0c29; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to left,
+      #24243e,
+      #302b63,
+      #0f0c29
+    ); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(
-      306deg,
-      rgb(47, 27, 60) 0%,
-      rgb(33, 35, 49) 50%,
-      rgb(30, 12, 43) 100%
-    );
+      to left,
+      #24243e,
+      #302b63,
+      #0f0c29
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
 }

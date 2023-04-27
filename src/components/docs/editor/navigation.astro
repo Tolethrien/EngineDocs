@@ -1,6 +1,6 @@
 ---
-type Props = Pick<Propss, "next"> | Pick<Propss, "prev">;
-interface Propss {
+type Props = Pick<AllProps, "next"> | Pick<AllProps, "prev">;
+interface AllProps {
   prev: {
     name: string;
     link: string;
