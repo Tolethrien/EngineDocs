@@ -1,0 +1,52 @@
+---
+---
+
+<nav
+  class="fixed right-0 z-10 hidden w-full items-center justify-end gap-2 bg-slate-800 p-6 text-lg font-extrabold md:flex md:gap-6 md:text-2xl"
+>
+  <a href="/tutorials/gettingStarted/gettingStarted">Getting started</a>
+  <a href="/docs/engine/options">Docs</a>
+  <a href="/showcase/start">Showcase</a>
+</nav>
+
+<nav
+  class="shadow-m fixed z-10 flex w-full flex-col bg-slate-600 p-4 md:hidden"
+>
+  <div class="flex items-center justify-between">
+    <h1 class="text-center text-2xl font-extrabold">
+      <a href="/"> ENGINE</a>
+    </h1>
+    <svg
+      id="sdsdsds"
+      viewBox="0 0 24 24"
+      fill="none"
+      class="w-12 fill-white stroke-white"
+      ><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"
+      ></g><g>
+        <g>
+          <path
+            d="M5 17H19M5 12H19M5 7H19"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </g>
+      </g></svg
+    >
+  </div>
+  <ul id="gg" class="grid h-0 overflow-y-auto text-center transition-all">
+    <li>
+      <a href="/tutorials/gettingStarted/gettingStarted">Getting started</a>
+    </li>
+    <li><a href="/docs/engine/options">Docs</a></li>
+    <li><a href="/showcase/start">Showcase</a></li>
+  </ul>
+</nav>
+
+<script>
+  const sd = document.getElementById("sdsdsds")!;
+  const gg = document.getElementById("gg")!;
+  sd.addEventListener("click", () => {
+    gg.classList.toggle("h-fit");
+    gg.classList.toggle("py-4");
+  });
+</script>

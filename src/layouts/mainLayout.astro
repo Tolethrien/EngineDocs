@@ -1,0 +1,19 @@
+---
+import NavBar from "../components/main/navBar.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Engine</title>
+  </head>
+  <body class="h-screen bg-slate-800 text-slate-200">
+    <NavBar />
+    <main class="">
+      <slot />
+    </main>
+  </body>
+</html>
