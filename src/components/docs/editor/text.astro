@@ -6,8 +6,9 @@ interface Props {
   color?: TextColor;
   size?: FontSize;
   weight?: FontWeight;
+  cut?: boolean;
 }
-const { color = "inherit", size = "normal", weight = "500" } = Astro.props;
+const { color = "inherit", size = "normal", weight = "500", cut } = Astro.props;
 
 const textColorClass: { [color in TextColor]: string } = {
   red: "text-red-300",
@@ -34,7 +35,9 @@ const textWeightClass: { [weight in FontWeight]: string } = {
 ---
 
 <p
-  class={`${textColorClass[color]} ${textSizeClass[size]} ${textWeightClass[weight]} py-2`}
+  class={`${textColorClass[color]} ${textSizeClass[size]} ${
+    textWeightClass[weight]
+  } ${cut && "indent-2"} py-2 leading-relaxed`}
 >
   <slot />
 </p>

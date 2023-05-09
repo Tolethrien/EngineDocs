@@ -1,9 +1,24 @@
 ---
-export const codet = `class Player extends Fragment{
-    constructor(){
-    super();
-    this.attatchComponent("hitbox")
-    }
+export const codet = `
+export default class Fragment {
+constructor({ pos, size, layer, targetDistanceMessuring, tag }: FragmentProps) {
+    this.position = new Vec2D(pos.x, pos.y);
+    this.size = new Vec2D(size.width, size.height);
+    this.attachedComponents = [];
+    this.visible = true;
+    this.updated = true;
+    this.layer = layer;
+    this.tag = tag;
+    this.id = this.createRandomId();
+    targetDistanceMessuring &&
+      (this.distanceToTarget = new Map([
+        ["tag", targetDistanceMessuring],
+        ["fragment", undefined],
+        ["distance", undefined]
+      ]));
+    this.layerList();
+  }
+  ...
 }`;
 export const codeb = `this.hitBoxes.addHitBox({
       name: "closeContact",

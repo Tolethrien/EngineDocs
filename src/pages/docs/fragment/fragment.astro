@@ -8,14 +8,25 @@ import Section from "../../../components/docs/editor/section.astro";
 import Text from "../../../components/docs/editor/text.astro";
 import DocsLayout from "../../../layouts/docsLayout.astro";
 import {
-  codet,
-  codeb,
-  active,
-} from "../../../components/docs/editor/codes.astro";
-import DeepDive from "../../../components/docs/editor/deepDive.astro";
+  codeConstructor,
+  codeFragmentProps,
+  codeLayerList,
+  codeAttachPluginFunc,
+  codeAttachPluginExampleOfThis,
+  codePluginToUpper,
+  codeSetup,
+  codeRender,
+  codeUpdate,
+  codesetTargetToDIstanceCheck,
+  codeGetDistance,
+  codeID,
+  codeCreatingNewFragment,
+  codeFragmentInvoke,
+  codeExtendSTR,
+  codeVisibleAndUpdated,
+} from "../../../components/codeSnippets/fragment";
 import Heading from "../../../components/docs/editor/heading.astro";
 import Note from "../../../components/docs/editor/note.astro";
-import Playground from "../../../components/docs/editor/playground.astro";
 import Navigation from "../../../components/docs/editor/navigation.astro";
 ---
 
@@ -27,103 +38,390 @@ import Navigation from "../../../components/docs/editor/navigation.astro";
   </Title>
 
   <Description>
-    <Highlighted text={"Hitbox"} color={"blue"} /> to niewidzialny prostokąt który
-    działa jako Trigger dla eventów. Dodanie go do obiektów pozwala na aktywowanie
-    specyficznych akcji na bazie tego czy inny obiekt znajduje się w jego dystansie
-  </Description>
-
-  <Section
-    title="Constructor"
-    desc="Htibox dodawany jest jako plugin do twojego komponentu na bazie fragmentu"
-  >
-    By dodać nowy komponent używamy wbudowanej opcji
-    <Link ref="#ankor">this.attachComponent</Link>
-    <Highlighted text={"this.attachComponent"} /> z wartością <Highlighted
-      text={"hitbox"}
-      color={"blue"}
-    />
-    <CodeSnippet
-      code={codet}
-      lineSucces={"4"}
-      wordMark={["1-Player-warningIcon", "2-constructor-warningIcon"]}
-      fileName="Player.js"
-    />
-    <Text>
-      Po dodaniu go do <Link ref="">Fragment</Link> można wywoływać go za pomoca
-      komendy <Highlighted text={"this.hitboxes"} color={"red"} />
-    </Text>
-    <CodeSnippet code="this.hitboxes.addHitbox()" />
-    <br />
-    <DeepDive desc="Know more about hitboxes under the hood">
-      asdassdasd
-    </DeepDive>
-  </Section>
-
-  <Section title="Options">
-    <CodeSnippet code={codeb} fileName="Player.js" />
-    <Text>
-      <Highlighted text={"name"} /> - name is your name of a new created hitbox,
-      you will be using this name to target specific hitboxes
-    </Text>
-    <Text>
-      <Highlighted text={"offset"} /> - offset is basic shape of a hitbox, is messured
-      from center point of a sprite and has a rectangle shape
-    </Text>
-    <Text>
-      <Highlighted text={"active"} /> - active is boolean that control that hitbox
-      should be activeted on contact
-    </Text>
-    <Text>
-      pod maską kazyd nowy tak dodany hitbox dodaje sie do listy hitboxow
-      komponentu, i moze byc zazanaczany i wywoływany a pomocą nadanego mu iD w
-      postacie nazwy
-    </Text>
-  </Section>
-
-  <Section title="Function" desc="opis opcji">
-    <Heading>Dodawanie</Heading>
-    <Text>by dodac nowy hitbox wywołujemy</Text>
-    <CodeSnippet code={codeb} />
-    <Text>
-      <Highlighted text={"name"} /> - name is your name of a new created hitbox,
-      you will be using this name to target specific hitboxes
-    </Text>
-    <Text>
-      <Highlighted text={"offset"} /> - offset is basic shape of a hitbox, is messured
-      from center point of a sprite and has a rectangle shape
-    </Text>
-    <Text>
-      <Highlighted text={"active"} /> - active is boolean that control that hitbox
-      should be activeted on contact
-    </Text>
-    <Heading>Usuwanie</Heading>
-    <Text>by usunac wczesniej dodany hitbox należy wywołac funkcje</Text>
-    <CodeSnippet code={`this.hitboxes.remove(name)`} />
-    <Note title="remember" type={"note"}>
-      <Text color={"base"}>
-        Nalezy jednak pamietac ze wszystkie powiazane z nim funkcje i triggery
-        przestana dzialac wrac z jego usunieciem oraz nie będzie można ich
-        przypisać na nowo
+    Fragment jest głównym blokiem i budulcem całego silnika. Wszystkie obiekty w
+    grze powinny extendować Fragment. Jest on zbudowany w modularny sposób
+    pozwalający łatwo przypisywać do niego poszczególne <Link
+      ref="/docs/fragment/plugins"
+    >
+      Pluginy
+    </Link>
+    Fragment nigdy nie powiniene być używany bezposśrednio a jedynie jako extend
+    dla Klasy.
+    <Section
+      title="Tworzenie nowego Fragmentu"
+      desc="tworzenie i ustawienia nowego fragmentu"
+    >
+      <Text>
+        Aby stworzyć nowy Fragment extendujemy jego klase w następujący sposób:
       </Text>
+      <CodeSnippet
+        code={codeCreatingNewFragment}
+        fileName={"newComponent.ts"}
+      />
+      <Text>
+        Pozwala nam to tworzyć wiele instancji tego samego obiektu poprzez
+        wywołanie go w następujący sposób:
+      </Text>
+      <CodeSnippet code={codeFragmentInvoke} fileName={"startPoint.ts"} />
+      <Text>
+        <Highlighted color={"blue"} text={"pos"} /> - <Link ref="">
+          Vector2D
+        </Link> trzymający pozycje(x/y) fragmentu w pixelach na canvasie
+      </Text>
+      <Text>
+        <Highlighted color={"blue"} text={"size"} /> - <Link ref="">
+          Vector2D
+        </Link> określający rozmiar(width/height) fragmentu w pixelach
+      </Text>
+      <Text>
+        <Highlighted color={"blue"} text={"layer"} /> - zmienna określająca w jakiej
+        warstwie obiektów powinien znaleść się dany obiekt. O warstwach niżej
+      </Text>
+      <Text cut>
+        <Highlighted color={"red"} text={"gameObjects"} /> - wszystkie fizyczne obiekty
+        w grze, czy to przedmioty czy NPC czy elementy otoczenia wymagające jakiejś
+        interaktywności np. kominek który można ugasić/zapalić za pomocą kliknięcia
+        na niego.
+      </Text>
+      <Text cut>
+        <Highlighted color={"red"} text={"uiObjects"} /> - wszystkie elementy UI
+        jak plecaki, paski zdrowia czy okna statystyk.
+      </Text>
+      <Text cut>
+        <Highlighted color={"red"} text={"mapObjects"} /> - wszystkie elementy statycznej
+        mapy jak kamienie, drzewa czy trawa.
+      </Text>
+      <Text cut>
+        <Highlighted color={"red"} text={"cameraObjects"} /> - wszystkie kamery w
+        grze, czy to pojedyńcza kamera w trybie single-player czy kilka kamer w split-screenie.
+      </Text>
+      <Text cut>
+        <Highlighted color={"red"} text={"independent"} /> - niezależne elementy
+        do manualnej kontroli, nie działa na nie automatyczne updatowanie czy renderowanie.
+      </Text>
+      <Text>
+        <Highlighted color={"blue"} text={"tag"} /> - zmienna nadająca Tag Fragmentowi,
+        Tag jest to string mogący określać jakąś większą grupe obiektów np. <Highlighted
+          color={"red"}
+          text={"gameObjects_monsters_arachnids"}
+        /> będzie oznaczał wszystkie arachnidowe potwory w grze. Za pomocą tagu można
+        wykonywać operacje na większej specyficznej grupie obiektów.
+      </Text>
+      <Text>
+        <Highlighted color={"blue"} text={"targetDistanceMessuring"} /> : Opcjonalne
+        - zmienna trzymająca string warstwy. O warstwach więcej niżej.
+      </Text>
+    </Section>
+    <Section title="dodawanie Pluginów">
+      <Text>
+        By dodać plugin należy scastować jego typ a następnie wywołać dodawanie
+        pluginu za pomocą funkcji <Highlighted
+          color={"yellow"}
+          text={"this.attachPlugin"}
+        />
+      </Text>
+      <CodeSnippet
+        code={codeAttachPluginExampleOfThis}
+        fileName={"newComponent.ts"}
+      />
+      <Text>Dodawanie pluginu przyjmuje dwa parametry:</Text>
+      <Text cut>
+        <Highlighted color={"blue"} text={"plugin"} /> - nazwa pluginu.
+      </Text>
+      <Text cut>
+        <Highlighted color={"blue"} text={"name"} /> : Opcjonalne - niestandardowa
+        nazwa do wywoływania pluginu.
+      </Text>
+      <Text>
+        Po dodaniu Plugin możemy go używać bespośrednio we Fragmencie. Istnieje
+        możliwość dodawania kilku takich samych pluginów do Fragmentu, wtedy
+        jednak każdy z nich musimy nazwać samemu, inaczej nie będziemy w stanie
+        ich wywoływać za pomocą this.
+      </Text>
+    </Section>
+    <Section title="Dodatkowe opcje Fragmentu">
+      <Heading>Setup, Update & Render</Heading>
+      <Text>
+        gameloop silnika używa trzech głównych komponentów w swoim działaniu, Są
+        to następująco:
+      </Text>
+      <Text>
+        <Highlighted color={"blue"} text={"setup"} /> - wywołuje się raz na początku.
+        Zaraz po zainicjowaniu wszystkich obiektów w grze
+      </Text>
+      <Text>
+        <Highlighted color={"blue"} text={"update"} /> - wywołuje się co każdą klatkę.
+        Służy do wykonywania w nim wszelakich obliczeń
+      </Text>
+      <Text>
+        <Highlighted color={"blue"} text={"render"} /> - wywołuje się jako ostatni
+        co każdą klatkę. Służy do wyświetlania obiektów na ekranie na bazie aktualnych
+        obliczeń
+      </Text>
+      <Text>
+        W bardziej specyficznych przypadkach może pojawić się potrzeba by
+        pluginy działy ze sobą w jakiś nietypowy sposób lub potrzeba dodania
+        niestatndardowych rzeczy do Fragmentu. Można wtedy zextendować funkcję
+        Setup,Update,Redner
+      </Text>
+      <CodeSnippet code={codeExtendSTR} fileName={"newComponent.ts"} />
+      <Heading>Visible & Updated</Heading>
+      <Text>
+        Fragment zawiera dwie publiczne zmienne które określają jak ma się
+        zachowywać
+      </Text>
+      <Text cut>
+        <Highlighted color={"blue"} text={"this.visible"} /> - Fragment będzie renderował
+        bądz nie swoje pluginy w zależności od tej zmiennej, Renderowanie oznacza
+        tylko i wyłacznie wyświetlenie obiektu na canvasie. Obiekt dalej będzie istniał
+        fizycznie w grze! Oznacza to iż jeśli ustawimy ścianę na niewidzialną to
+        gracz dalej będzie mógł sie na niej zablokować mimo iż nic nie widzi.
+      </Text>
+      <Text cut>
+        <Highlighted color={"blue"} text={"this.updated"} /> - Fragment będzie/nie
+        będzie aktualizował swoich obliczeń. Przestaną działąc zatem wszystkie polegające
+        na obliczeniach pluginy jak ruch postaci, czy np Colidery z obiektami.
+      </Text>
+    </Section>
+    <Note title="Modyfikowanie" type={"warning"}>
+      Poniżej jest pełny opis Fragmentu dla potrzeb modyfikowania silnika.
+      Jeżeli jedynie chcesz zacząć z nowymi fragmentami przejdź do <Link
+        ref="link"
+      >
+        Tworzenie nowego obiektu
+      </Link> w dziale Getting Started
     </Note>
-    <Heading>Activate</Heading>
-    <Text>aktywowanie/deaktywowanie opiera sie na wywołaniu fukncji</Text>
-    <CodeSnippet code={active} />
+  </Description>
+  <!-- ================================================================================================ -->
+  <Section title="Constructor" desc="Constructor generujący nowy Fragment">
+    <CodeSnippet
+      code={codeConstructor}
+      fileName="Fragment.ts"
+      lineNeutral={"1"}
+    />
     <Text>
-      <Highlighted text={"hitbox"} /> - id(nazwa) hitboxa ktory chcemy użyć
+      <Highlighted color={"blue"} text={"this.position"} /> - <Link ref="">
+        Vector2D
+      </Link> trzymający pozycje(x/y) fragmentu w pixelach na canvasie
     </Text>
     <Text>
-      <Highlighted text={"value"} /> - true/false w zaleznosci czy chcemy go aktywoac
-      czy deaktywowac
+      <Highlighted color={"blue"} text={"this.size"} /> - <Link ref="">
+        Vector2D
+      </Link> określający rozmiar(width/height) fragmentu w pixelach
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"this.attachedPlugins"} /> - Lista zawierająca
+      wszystkie dodane do Fragmentu pluginy
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"this.visible"} /> - zmienna określająca
+      czy fragment ma wykonywać funkcję render() dla wszystkich swoich pluginów
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"this.update"} /> - zmienna określająca czy
+      fragment ma wykonywać funkcję update(), dla wszystkich swoich pluginów
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"this.layer"} /> - zmienna trzymająca string
+      warstwy. O warstwach więcej niżej.
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"this.tag"} /> - zmienna nadająca Tag Fragmentowi,
+      Tag jest to string mogący określać jakąś większą grupe obiektów np. <Highlighted
+        color={"red"}
+        text={"gameObjects_monsters_arachnids"}
+      /> będzie oznaczał wszystkie arachnidowe potwory w grze. Za pomocą tagu można
+      wykonywać operacje na większej specyficznej grupie obiektów.
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"this.id"} /> - indywidualne ID fragmentu.
+      Nadawane automatycznie przy stworzeniu obiektu.
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"this.distanceToTarget"} /> - zmienna powstanie
+      tylko jeśli parametr <Highlighted
+        color={"red"}
+        text={"targetDistanceMessuring"}
+      /> zwróci tag obiektu do którego dystans ma mierzyć Fragment. Sama zmienna
+      jest mapą zawierająca <br />
+      <Highlighted color={"red"} text={"Tag"} /> - tag obiektu <br />
+      <Highlighted color={"red"} text={"fragment"} /> - obiekt znaleziony na bazie
+      tagu <br />
+      <Highlighted color={"red"} text={"distance"} /> - faktyczny dystans do obiektu
+      w pixelach <br />
+    </Text>
+    <Text>
+      <Highlighted color={"yellow"} text={"this.layerList()"} /> - funckja przypisująca
+      dany Fragment do odpowiedniej Listy na bazie <Highlighted
+        color={"blue"}
+        text={"this.layer"}
+      />
     </Text>
   </Section>
-  <!-- <DeepDive>asdassdasd</DeepDive> -->
-  <Section title="Test what you learn">
-    <Playground
-      codeName="pensive-morning-heb9jd"
-      title="Hitboxes Area"
-      desc="add some hitboxes and test how they will react with the world"
+  <!-- ================================================================================================ -->
+  <Section
+    title="Layering"
+    desc={"Warstwowanie to nadawanie Fragmentu do odpowiedniej listy wykonywania w silniku"}
+  >
+    <CodeSnippet
+      code={codeFragmentProps}
+      fileName={"fragment.ts"}
+      lineNeutral={"4"}
     />
+    <Text>
+      Zadaniem warstw jest przypisanie fragmentu do odpowiedniej listy obiektów,
+      Listy te określają jako co ma być traktowany dany Fragment. Dla przykładu
+      obiekty znajdujące się w liście <Highlighted
+        color={"green"}
+        text={"uiObjects"}
+      /> są traktowane jako elementy UI i renderowane w zupełni inny sposób niż obiekty
+      <Highlighted color={"green"} text={"gameObjects"} /> ponieważ mają nałożona
+      pozycje <Highlighted color={"blue"} text={"Fixed"} /> na ekranie by nie zmieniały
+      swojego położenia kiedy gracz wykonuje ruch, krótko mówiąc nie są traktowane
+      jako fizyczny obiekt w grze.
+    </Text>
+    <Heading>Layer List</Heading>
+    <CodeSnippet code={codeLayerList} fileName={"fragment.ts"} />
+    <Text>
+      <Highlighted color={"green"} text={"gameObjects"} /> - Obiekty te trafiają
+      do listy <Link ref="list">gameObjects</Link> oraz są traktowane jak fizyczne
+      obiekty w grze. Zazwyczaj takie na któych będziemy przeprowadzać jakies obliczenia,
+      zmieniać w czasie lub wchodzić z nimi w interakcje
+    </Text>
+    <Text>
+      <Highlighted color={"green"} text={"uiObjects"} /> - Obiekty te trafiają do
+      listy <Link ref="list">uiObjects</Link> oraz są traktowane jako wszelakie elementy
+      UI. Przed ich renderowaniem wyłączana jest kamera by można im nadac pozycje
+      "fixed" czyli by nie działały na nią transformacje canvasu(obiekty zostają
+      w stałej ustalonej pozycji i nie zmieniają się z ruchem na ekranie)
+    </Text>
+    <Text>
+      <Highlighted color={"green"} text={"cameraObjects"} /> - Obiekty te trafiają
+      do listy <Link ref="list">cameraObjects</Link> oraz są traktowane jako kamera
+      w grze, nie istnieją fizycznie w grze zamiast tego pobierają i ustalają swoją
+      pozycję(śledzą) na bazie pozycji celu.
+    </Text>
+    <Text>
+      <Highlighted color={"green"} text={"mapObjects"} /> - Obiekty te trafiają do
+      listy <Link ref="list">mapObjects</Link> oraz są traktowane jako statyczne
+      elementy mapy
+    </Text>
+    <Text>
+      <Highlighted color={"green"} text={"independent"} /> - Obiekty te nie trafiają
+      na żadną liste a zamiast tego mogą być tworzone i zarządzane indywidualnie
+      poprzez wykonywanie na nich odpowiednich funkcji kiedy uznamy za stosowne.
+      W przeciwieństwie do powyższych nie ma w nich żadnej automatyzacji więc jeśli
+      nie upewnimy się gdzie jak i czy mają działać, nie będą!
+    </Text>
+  </Section>
+  <!-- ================================================================================================ -->
+  <Section title="Functions">
+    <Heading>Attaching new Plugin</Heading>
+    <CodeSnippet
+      code={codeAttachPluginFunc}
+      fileName={"fragment.ts"}
+      wordMark={["1-plugin-wordBlue", "1-name-wordRed"]}
+    />
+    <Text>Dodawanie nowego pluginu wykonywane jest w kilku krokach:</Text>
+    <Text>
+      - Funkcja znajduje na <Link ref="s">liscie pluginów</Link> ten który odpowiada
+      nazwie podanej jako Parametr <Highlighted
+        color={"blue"}
+        text={"plugin"}
+      />.
+    </Text>
+    <Text>
+      - Funkcja tworzy ze stringu parametru nową klase oraz pushuje ją do listy
+      <Highlighted color={"blue"} text={"this.attachedPlugins"} /> Fragmentu wraz
+      z podanymi parametrami.
+    </Text>
+    <Text>
+      - Funkcja tworzy nową zmienną <Highlighted
+        color={"blue"}
+        text={"this."}
+      /> na bazie nazwy faktycznej <Highlighted
+        color={"blue"}
+        text={"pluginu"}
+      /> bądz opcjonalnej nazwy podanej w parametrach funkcji <Highlighted
+        color={"red"}
+        text={"name"}
+      /> która jest referencePointem do odpowiedniego plugina na liście.
+    </Text>
+    <Text>
+      Głównym założeniem przypisywania każdego pluginu z listy do osobnej
+      własnej zmiennej jest łatwość wywoływania potem na nich operacji oraz
+      przypisanie jej odpowiedniego Typu.
+    </Text>
+    <CodeSnippet code={codeAttachPluginExampleOfThis} />
+    <Text>
+      <Highlighted color={"blue"} text={"attachPlugin"} /> zawiera jeszcze pomocniczą
+      funkcję pluginNameToUpper któej zadaniem jest jak nazwa wskazuje upewnić się
+      że przy tworzeniu nowego komponentu constructor <Highlighted
+        color={"blue"}
+        text={"new"}
+      /> dostanie odpowiednio sformatowaną nazwę poprzez capilizowanie pierwszej
+      litery pluginu. (nazwa klasy wymaga by zaczynać się z dużej litery)
+    </Text>
+    <CodeSnippet code={codePluginToUpper} />
+    <Heading>Setup</Heading>
+    <Text>
+      <Highlighted color={"blue"} text={"setup"} /> to funkcja która wykonuje się
+      po załadowaniu wszystkich komponentów ale jeszcze przed rozpoczęciem game loopu.
+      Jej głównym celem jest wykonywanie rzeczy które wymagają korelacji z innymi
+      komponentami w momencie w którym nie wiadomo jeszcze czy one istnieją. Niweluje
+      to potrzebe tworzenia Fragmentów w odpowiedniej kolejności.
+    </Text>
+    <CodeSnippet code={codeSetup} />
+    <Text>
+      Najpierw funkcja wykonuje - <Highlighted color={"blue"} text={"setup"} /> dla
+      wszystkich swoich pluginów a następnie sprawdza czy fragment ma śledzić jakiś
+      cel, znajduje go w liście <Link ref="s">gameObjects</Link> oraz przypisuje
+      do <Highlighted color={"blue"} text={"this.distanceToTarget.fragment"} /> wykorzystując
+      do tego funkcję:
+      <CodeSnippet code={codesetTargetToDIstanceCheck} />
+    </Text>
+    <Heading>Update</Heading>
+    <Text>
+      <Highlighted color={"blue"} text={"update"} /> to funkcja odpowiedzialna za
+      główny update Fragmentu oraz wszystkich jego pluginów. Powinny w niej znadywać
+      się wszelakie obliczenia które Fragment ma zrobić zanim zacznie rysować klatke
+      na ekranie.
+    </Text>
+    <CodeSnippet code={codeUpdate} />
+    <Text>
+      najpierw funckja sprawdza czy <Highlighted
+        color={"blue"}
+        text={"this.updated"}
+      /> zezwala jej na update a nastepnie wykonuje - <Highlighted
+        color={"blue"}
+        text={"update"}
+      />
+      dla wszystkich swoich pluginów a następnie sprawdza czy fragment ma śledzić
+      jakiś cel oraz przypisuje do <Highlighted
+        color={"blue"}
+        text={"this.distanceToTarget.distance"}
+      /> dystans między sobą a celem w pixelach wykorzystując do tego funkcję która
+      oblicza dystans między dwoma punktami za pomocą twierdzenia Pitagorasa:
+    </Text>
+    <CodeSnippet code={codeGetDistance} />
+    <Heading>Render</Heading>
+    <Text>
+      <Highlighted color={"blue"} text={"render"} /> to funkcja odpowiedzialna za
+      główny render fragmentu i wszystkich jego komponentów.
+    </Text>
+    <CodeSnippet code={codeRender} />
+    <Text>
+      Funkcja sprawdza czy <Highlighted color={"blue"} text={"this.visible"} /> zezwala
+      na renderowanie na canvasie i wykonuje render wszystkich jego pluginów
+    </Text>
+    <Heading>ID</Heading>
+    <Text>
+      Funkcja nadająca fragmentowi podczas tworzenia go w constructorze <Highlighted
+        color={"blue"}
+        text={"this.id"}
+      /> czyli unikalny ciag znaków.
+    </Text>
+    <CodeSnippet code={codeID} />
   </Section>
   <Navigation
     prev={{ name: "Fragment", link: "d" }}

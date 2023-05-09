@@ -26,6 +26,12 @@
   .wordHighlight {
     @apply bg-purple-400 bg-opacity-20;
   }
+  .wordBlue {
+    @apply bg-blue-600 bg-opacity-50;
+  }
+  .wordRed {
+    @apply bg-red-600 bg-opacity-50;
+  }
 }
 @layer utilities {
   .scrollbar::-webkit-scrollbar {

@@ -48,7 +48,7 @@ const succes = lineMarker(lineSucces);
       data-lines-neutral={natural}
       data-word-mark={wordMark ?? undefined}
     >
-      <Code code={code} lang={"javascript"} theme={"dark-plus"} />
+      <Code code={code} lang={"typescript"} theme={"dark-plus"} />
     </code-snippet>
   </div>
 </div>
@@ -68,7 +68,7 @@ const succes = lineMarker(lineSucces);
         "codeHighliteSucces",
         "codeHighliteNeutral",
       ];
-      const highlitedWord = ["warningIcon"];
+      const highlitedWord = ["wordBlue", "wordRed"];
       const wordMarker = this.getAttribute("data-word-mark")?.split(",");
       const wordToMark = wordMarker?.map((e) => e.split("-"));
       //find and mark lines with specific color
