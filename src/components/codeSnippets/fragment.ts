@@ -61,6 +61,17 @@ export const codeAttachPluginExampleOfThis = `export default class MyNewFragment
     this.myMouse?.addEvent(...); //wywoływanie funkcji na własnej nazwie zamiast nazwy pluginu
   }
 }`;
+export const codeCodeCastingNotNull = `export default class MyNewFragment extends Fragment {
+  renderer?: RendererType;
+  ouseEvents!: MouseEventsType;
+  constructor(...){
+    super(...);
+    this.attachPlugin("renderer");
+    this.attachPlugin("mouseEvents");
+    this.renderer?.change(...); //musimy upewnić się za każdym razem iż this.renderer istnieje.
+    this.myMouse.addEvent(...); //daliśmy znać typescriptowi że this.mouseEvents na pewno będzie w tym momencie istniało.
+  }
+}`;
 export const codePluginToUpper = `export default class Fragment {
 ...
   private pluginNameToUpper(name: string) {
@@ -170,3 +181,9 @@ export const codeVisibleAndUpdated = `export default class MyNewFragment extends
     this.updated = false // fragment nie będzie aktualizwał swoich obliczeń
   }
 `;
+export const codeDynamicAny = `export default class Fragment {
+  ...
+  public size: Vec2DType;
+  [index: string]: any;
+  protected layer: FragmentProps["layer"];
+  ...`;

@@ -6,12 +6,12 @@ interface Props {
 const { desc } = Astro.props;
 ---
 
-<deep-dive class="mx-auto my-4 block w-full md:w-3/4">
+<deep-dive class="mx-auto my-4 block w-full md:w-11/12">
   <details
     class="pointer-events-none relative h-fit rounded-lg border-2 border-indigo-100 border-opacity-10 bg-indigo-900"
   >
     <summary class="grid gap-1 px-6 pb-4">
-      <p class="flex gap-2 py-2 text-2xl font-bold text-indigo-200">
+      <p class="flex gap-2 py-2 text-xl font-bold text-indigo-200">
         <svg viewBox="0 0 24 24" width="1.5rem" class="fill-indigo-200"
           ><g stroke-width="0"></g><g
             stroke-linecap="round"
@@ -21,9 +21,9 @@ const { desc } = Astro.props;
             ></path><path fill="none" d="M0 0h24v24H0z"></path></g
           ></svg
         >
-        Get More!
+        Deep Dive!
       </p>
-      <p class="pb-4 text-xl font-bold text-slate-200">
+      <p class="pb-4 text-base font-bold text-slate-200">
         {desc}
       </p>
       <button
@@ -34,7 +34,7 @@ const { desc } = Astro.props;
       </button>
     </summary>
     <div class="h-[1px] w-full bg-indigo-100 bg-opacity-10"></div>
-    <div class="m-auto h-80 w-[95%] py-2">
+    <div class="pointer-events-auto m-auto min-h-[10rem] w-[95%] py-2">
       <slot />
     </div>
   </details>

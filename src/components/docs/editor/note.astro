@@ -3,7 +3,7 @@ interface Props {
   type: infoType;
   title: string;
 }
-type infoType = "note" | "warning";
+type infoType = "note" | "warning" | "deepDev";
 interface IconType {
   pathA: string;
   widthA: string;
@@ -33,16 +33,29 @@ const icons: Icons = {
     widthB: "1.5",
     color: "stroke-purple-300",
   },
+  deepDev: {
+    pathA:
+      "M0 4.75C0 3.784.784 3 1.75 3h20.5c.966 0 1.75.784 1.75 1.75v14.5A1.75 1.75 0 0122.25 21H1.75A1.75 1.75 0 010 19.25V4.75zm1.75-.25a.25.25 0 00-.25.25v14.5c0 .138.112.25.25.25h20.5a.25.25 0 00.25-.25V4.75a.25.25 0 00-.25-.25H1.75z",
+    widthA: "1.5",
+    pathB:
+      "M5 8.75A.75.75 0 015.75 8h11.5a.75.75 0 010 1.5H5.75A.75.75 0 015 8.75zm0 4a.75.75 0 01.75-.75h5.5a.75.75 0 010 1.5h-5.5a.75.75 0 01-.75-.75z",
+    widthB: "1.5",
+    color: "stroke-purple-300",
+  },
 };
 const styleClass = {
   note: "bg-purple-700 text-purple-300 border-l-purple-300 border-purple-600",
+  deepDev:
+    "bg-rose-700 text-rose-300 border-l-rose-300  border-r-rose-900 border-y-rose-900",
   warning:
     "bg-rose-700 text-rose-300 border-l-rose-300  border-r-rose-900 border-y-rose-900",
 };
 ---
 
 <div
-  class={`${styleClass[type]} mx-auto rounded-lg p-4 w-full m-4 md:w-3/4 h-fit border-l-8 border-y-2 border-r-2`}
+  class={`${styleClass[type]} ${
+    type === "deepDev" && "mt-20"
+  } mx-auto rounded-lg p-4 w-full m-4 md:w-3/4 h-fit border-l-8 border-y-2 border-r-2`}
 >
   <h2 class={`flex gap-2 text-lg font-bold items-center`}>
     <svg

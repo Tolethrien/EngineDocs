@@ -24,10 +24,13 @@ import {
   codeFragmentInvoke,
   codeExtendSTR,
   codeVisibleAndUpdated,
+  codeDynamicAny,
+  codeCodeCastingNotNull,
 } from "../../../components/codeSnippets/fragment";
 import Heading from "../../../components/docs/editor/heading.astro";
 import Note from "../../../components/docs/editor/note.astro";
 import Navigation from "../../../components/docs/editor/navigation.astro";
+import DeepDive from "../../../components/docs/editor/deepDive.astro";
 ---
 
 <DocsLayout pageName="Fragment">
@@ -47,152 +50,211 @@ import Navigation from "../../../components/docs/editor/navigation.astro";
     </Link>
     Fragment nigdy nie powiniene być używany bezposśrednio a jedynie jako extend
     dla Klasy.
-    <Section
-      title="Tworzenie nowego Fragmentu"
-      desc="tworzenie i ustawienia nowego fragmentu"
-    >
+  </Description>
+  <Section
+    title="Tworzenie nowego Fragmentu"
+    desc="tworzenie i ustawienia nowego fragmentu"
+  >
+    <Text>
+      Aby stworzyć nowy Fragment extendujemy jego klase w następujący sposób:
+    </Text>
+    <CodeSnippet code={codeCreatingNewFragment} fileName={"newComponent.ts"} />
+    <Text>
+      Pozwala nam to tworzyć wiele instancji tego samego obiektu poprzez
+      wywołanie go w następujący sposób:
+    </Text>
+    <CodeSnippet code={codeFragmentInvoke} fileName={"startPoint.ts"} />
+    <Text>
+      <Highlighted color={"blue"} text={"pos"} /> - <Link ref="">Vector2D</Link>
+      trzymający pozycje(x/y) fragmentu w pixelach na canvasie
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"size"} /> - <Link ref="">
+        Vector2D
+      </Link> określający rozmiar(width/height) fragmentu w pixelach
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"layer"} /> - zmienna określająca w jakiej
+      warstwie obiektów powinien znaleść się dany obiekt. O warstwach niżej
+    </Text>
+    <Text cut>
+      <Highlighted color={"red"} text={"gameObjects"} /> - wszystkie fizyczne obiekty
+      w grze, czy to przedmioty czy NPC czy elementy otoczenia wymagające jakiejś
+      interaktywności np. kominek który można ugasić/zapalić za pomocą kliknięcia
+      na niego.
+    </Text>
+    <Text cut>
+      <Highlighted color={"red"} text={"uiObjects"} /> - wszystkie elementy UI jak
+      plecaki, paski zdrowia czy okna statystyk.
+    </Text>
+    <Text cut>
+      <Highlighted color={"red"} text={"mapObjects"} /> - wszystkie elementy statycznej
+      mapy jak kamienie, drzewa czy trawa.
+    </Text>
+    <Text cut>
+      <Highlighted color={"red"} text={"cameraObjects"} /> - wszystkie kamery w grze,
+      czy to pojedyńcza kamera w trybie single-player czy kilka kamer w split-screenie.
+    </Text>
+    <Text cut>
+      <Highlighted color={"red"} text={"independent"} /> - niezależne elementy do
+      manualnej kontroli, nie działa na nie automatyczne updatowanie czy renderowanie.
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"tag"} /> - zmienna nadająca Tag Fragmentowi,
+      Tag jest to string mogący określać jakąś większą grupe obiektów np. <Highlighted
+        color={"red"}
+        text={"gameObjects_monsters_arachnids"}
+      /> będzie oznaczał wszystkie arachnidowe potwory w grze. Za pomocą tagu można
+      wykonywać operacje na większej specyficznej grupie obiektów.
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"targetDistanceMessuring"} /> : Opcjonalne
+      - zmienna trzymająca string warstwy. O warstwach więcej niżej.
+    </Text>
+    <Note title="dodatkowe zmienne" type={"note"}>
       <Text>
-        Aby stworzyć nowy Fragment extendujemy jego klase w następujący sposób:
-      </Text>
-      <CodeSnippet
-        code={codeCreatingNewFragment}
-        fileName={"newComponent.ts"}
-      />
-      <Text>
-        Pozwala nam to tworzyć wiele instancji tego samego obiektu poprzez
-        wywołanie go w następujący sposób:
-      </Text>
-      <CodeSnippet code={codeFragmentInvoke} fileName={"startPoint.ts"} />
-      <Text>
-        <Highlighted color={"blue"} text={"pos"} /> - <Link ref="">
-          Vector2D
-        </Link> trzymający pozycje(x/y) fragmentu w pixelach na canvasie
-      </Text>
-      <Text>
-        <Highlighted color={"blue"} text={"size"} /> - <Link ref="">
-          Vector2D
-        </Link> określający rozmiar(width/height) fragmentu w pixelach
-      </Text>
-      <Text>
-        <Highlighted color={"blue"} text={"layer"} /> - zmienna określająca w jakiej
-        warstwie obiektów powinien znaleść się dany obiekt. O warstwach niżej
-      </Text>
-      <Text cut>
-        <Highlighted color={"red"} text={"gameObjects"} /> - wszystkie fizyczne obiekty
-        w grze, czy to przedmioty czy NPC czy elementy otoczenia wymagające jakiejś
-        interaktywności np. kominek który można ugasić/zapalić za pomocą kliknięcia
-        na niego.
-      </Text>
-      <Text cut>
-        <Highlighted color={"red"} text={"uiObjects"} /> - wszystkie elementy UI
-        jak plecaki, paski zdrowia czy okna statystyk.
-      </Text>
-      <Text cut>
-        <Highlighted color={"red"} text={"mapObjects"} /> - wszystkie elementy statycznej
-        mapy jak kamienie, drzewa czy trawa.
-      </Text>
-      <Text cut>
-        <Highlighted color={"red"} text={"cameraObjects"} /> - wszystkie kamery w
-        grze, czy to pojedyńcza kamera w trybie single-player czy kilka kamer w split-screenie.
-      </Text>
-      <Text cut>
-        <Highlighted color={"red"} text={"independent"} /> - niezależne elementy
-        do manualnej kontroli, nie działa na nie automatyczne updatowanie czy renderowanie.
-      </Text>
-      <Text>
-        <Highlighted color={"blue"} text={"tag"} /> - zmienna nadająca Tag Fragmentowi,
-        Tag jest to string mogący określać jakąś większą grupe obiektów np. <Highlighted
-          color={"red"}
-          text={"gameObjects_monsters_arachnids"}
-        /> będzie oznaczał wszystkie arachnidowe potwory w grze. Za pomocą tagu można
-        wykonywać operacje na większej specyficznej grupie obiektów.
-      </Text>
-      <Text>
-        <Highlighted color={"blue"} text={"targetDistanceMessuring"} /> : Opcjonalne
-        - zmienna trzymająca string warstwy. O warstwach więcej niżej.
-      </Text>
-    </Section>
-    <Section title="dodawanie Pluginów">
-      <Text>
-        By dodać plugin należy scastować jego typ a następnie wywołać dodawanie
-        pluginu za pomocą funkcji <Highlighted
+        Extendowany Fragment można poszerzać o własne zmienne do póki
+        constructor fragmentu w <Highlighted
           color={"yellow"}
-          text={"this.attachPlugin"}
+          text={"super()"}
+        />
+        dostaje zmienne zdefiniowane w <Highlighted
+          color={"green"}
+          text={"FragmentProps"}
         />
       </Text>
-      <CodeSnippet
-        code={codeAttachPluginExampleOfThis}
-        fileName={"newComponent.ts"}
-      />
-      <Text>Dodawanie pluginu przyjmuje dwa parametry:</Text>
-      <Text cut>
-        <Highlighted color={"blue"} text={"plugin"} /> - nazwa pluginu.
-      </Text>
-      <Text cut>
-        <Highlighted color={"blue"} text={"name"} /> : Opcjonalne - niestandardowa
-        nazwa do wywoływania pluginu.
-      </Text>
-      <Text>
-        Po dodaniu Plugin możemy go używać bespośrednio we Fragmencie. Istnieje
-        możliwość dodawania kilku takich samych pluginów do Fragmentu, wtedy
-        jednak każdy z nich musimy nazwać samemu, inaczej nie będziemy w stanie
-        ich wywoływać za pomocą this.
-      </Text>
-    </Section>
-    <Section title="Dodatkowe opcje Fragmentu">
-      <Heading>Setup, Update & Render</Heading>
-      <Text>
-        gameloop silnika używa trzech głównych komponentów w swoim działaniu, Są
-        to następująco:
-      </Text>
-      <Text>
-        <Highlighted color={"blue"} text={"setup"} /> - wywołuje się raz na początku.
-        Zaraz po zainicjowaniu wszystkich obiektów w grze
-      </Text>
-      <Text>
-        <Highlighted color={"blue"} text={"update"} /> - wywołuje się co każdą klatkę.
-        Służy do wykonywania w nim wszelakich obliczeń
-      </Text>
-      <Text>
-        <Highlighted color={"blue"} text={"render"} /> - wywołuje się jako ostatni
-        co każdą klatkę. Służy do wyświetlania obiektów na ekranie na bazie aktualnych
-        obliczeń
-      </Text>
-      <Text>
-        W bardziej specyficznych przypadkach może pojawić się potrzeba by
-        pluginy działy ze sobą w jakiś nietypowy sposób lub potrzeba dodania
-        niestatndardowych rzeczy do Fragmentu. Można wtedy zextendować funkcję
-        Setup,Update,Redner
-      </Text>
-      <CodeSnippet code={codeExtendSTR} fileName={"newComponent.ts"} />
-      <Heading>Visible & Updated</Heading>
-      <Text>
-        Fragment zawiera dwie publiczne zmienne które określają jak ma się
-        zachowywać
-      </Text>
-      <Text cut>
-        <Highlighted color={"blue"} text={"this.visible"} /> - Fragment będzie renderował
-        bądz nie swoje pluginy w zależności od tej zmiennej, Renderowanie oznacza
-        tylko i wyłacznie wyświetlenie obiektu na canvasie. Obiekt dalej będzie istniał
-        fizycznie w grze! Oznacza to iż jeśli ustawimy ścianę na niewidzialną to
-        gracz dalej będzie mógł sie na niej zablokować mimo iż nic nie widzi.
-      </Text>
-      <Text cut>
-        <Highlighted color={"blue"} text={"this.updated"} /> - Fragment będzie/nie
-        będzie aktualizował swoich obliczeń. Przestaną działąc zatem wszystkie polegające
-        na obliczeniach pluginy jak ruch postaci, czy np Colidery z obiektami.
-      </Text>
-    </Section>
-    <Note title="Modyfikowanie" type={"warning"}>
-      Poniżej jest pełny opis Fragmentu dla potrzeb modyfikowania silnika.
-      Jeżeli jedynie chcesz zacząć z nowymi fragmentami przejdź do <Link
-        ref="link"
-      >
-        Tworzenie nowego obiektu
-      </Link> w dziale Getting Started
     </Note>
-  </Description>
+  </Section>
+  <Section title="dodawanie Pluginów">
+    <Text>
+      By dodać <Link ref="">Plugin</Link> należy scastować jego typ a następnie wywołać
+      dodawanie pluginu za pomocą funkcji <Highlighted
+        color={"yellow"}
+        text={"this.attachPlugin"}
+      />
+    </Text>
+    <CodeSnippet
+      code={codeAttachPluginExampleOfThis}
+      fileName={"newComponent.ts"}
+      lineSucces={"2,6"}
+    />
+    <Text>Dodawanie pluginu przyjmuje dwa parametry:</Text>
+    <Text cut>
+      <Highlighted color={"blue"} text={"plugin"} /> - nazwa pluginu.
+    </Text>
+    <Text cut>
+      <Highlighted color={"blue"} text={"name"} /> : Opcjonalne - niestandardowa
+      nazwa do wywoływania pluginu.
+    </Text>
+    <Text>
+      Po dodaniu <Link ref="">Pluginu</Link> możemy go używać bespośrednio we Fragmencie.
+      Istnieje możliwość dodawania kilku takich samych pluginów do Fragmentu, wtedy
+      jednak każdy z nich musimy nazwać samemu, inaczej nie będziemy w stanie ich
+      wywoływać za pomocą this.
+    </Text>
+    <DeepDive desc="Nadawanie Typu zmiennej">
+      Ponieważ Typescript uzywa statycznego sprawdzania typowania podczas
+      kompilacji kodu a nie "runTim'u" nie ma możliwiści powiedzenia Fragmentowi
+      jakim typem bedzie dodany póżniej(po stworzeniu constructora) plugin. Stąd
+      by korzystać dalej z zalet TS należy w naszym nowym komponencie samemu
+      zadbać o to by powiedzieć typescriptowi że spodziewamy się takiego i
+      takiego typu na danej zmiennej. Pod maską Fragment używa dynamicznie
+      dodawanej zmiennej z typem <Highlighted color={"green"} text={"Any"} /> by
+      powiedzieć Typescriptowi że może sie spodziewać dodawania do Fragmentu nowych
+      zmiennych z czasem:
+      <CodeSnippet code={codeDynamicAny} lineNeutral={"4"} />
+      Dlatego by uniknąć <Highlighted color={"green"} text={"Any"} /> należy nową
+      zmienną Scastować, co i tak jest wymagane w Klasowym Typescripcie.<br />
+      Typescript będzie od nas wymagał by powiedzieć mu czy ta zmienna jest wymagana
+      w naszym komponencie czy nie poprzez operator <Highlighted
+        color={"blue"}
+        text={"!"}
+      /> albo <Highlighted color={"blue"} text={"?"} />. Jeśli jesteśmy pewni że
+      jakiś Plugin ma byc używany w nszym nowym komponencie możemy śmiało użyć
+      operatora <Highlighted color={"blue"} text={"!"} /> i nie musieć póżniej upewniać
+      się przy kazym użyciu zmiennej czy dany Plugin na pewno istnieje. Jeśli dany
+      Plugin będzzie dodawany kontekstowo używamy operatora <Highlighted
+        color={"blue"}
+        text={"?"}
+      /> i póżniej upewniamy się czy dany plugin istnieje.
+      <CodeSnippet
+        code={codeCodeCastingNotNull}
+        lineSucces={"2,8"}
+        lineNeutral={"3,9"}
+      />
+    </DeepDive>
+  </Section>
+  <Section title="Dodatkowe opcje Fragmentu">
+    <Heading>Setup, Update & Render</Heading>
+    <Text>
+      gameloop silnika używa trzech głównych komponentów w swoim działaniu, Są
+      to następująco:
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"setup"} /> - wywołuje się raz na początku.
+      Zaraz po zainicjowaniu wszystkich obiektów w grze
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"update"} /> - wywołuje się co każdą klatkę.
+      Służy do wykonywania w nim wszelakich obliczeń
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"render"} /> - wywołuje się jako ostatni
+      co każdą klatkę. Służy do wyświetlania obiektów na ekranie na bazie aktualnych
+      obliczeń
+    </Text>
+    <Text>
+      W bardziej specyficznych przypadkach może pojawić się potrzeba by
+      <Link ref="">Pluginy</Link> działy ze sobą w jakiś nietypowy sposób lub potrzeba
+      dodania niestatndardowych rzeczy do Fragmentu. Można wtedy zextendować funkcję
+      Setup,Update,Redner.
+    </Text>
+    <CodeSnippet code={codeExtendSTR} fileName={"newComponent.ts"} />
+    <Heading>Visible & Updated</Heading>
+    <Text>
+      Fragment zawiera dwie publiczne zmienne które określają jak ma się
+      zachowywać
+    </Text>
+    <Text cut>
+      <Highlighted color={"blue"} text={"this.visible"} /> - Fragment będzie renderował
+      bądz nie swoje <Link ref="">Pluginy</Link> w zależności od tej zmiennej, Renderowanie
+      oznacza tylko i wyłacznie wyświetlenie obiektu na canvasie. Obiekt dalej będzie
+      istniał fizycznie w grze! Oznacza to iż jeśli ustawimy ścianę na niewidzialną
+      to gracz dalej będzie mógł sie na niej zablokować mimo iż nic nie widzi.
+    </Text>
+    <Text cut>
+      <Highlighted color={"blue"} text={"this.updated"} /> - Fragment będzie/nie
+      będzie aktualizował swoich obliczeń. Przestaną działąc zatem wszystkie polegające
+      na obliczeniach <Link ref="">Pluginy</Link> jak ruch postaci, czy np Colidery
+      z obiektami. Warto jednak zaznaczyć że wizualna częśc Fragmentu dalej będzie
+      widoczna w grze.
+    </Text>
+  </Section>
+  <Note title="Modyfikowanie" type={"deepDev"}>
+    Poniżej jest pełny opis Fragmentu dla potrzeb modyfikowania silnika. Nie
+    zalecane jest jednka to robić jeśli nie mamy głębokiej znajomości jego
+    działania lub wyższej potrzeby. Jeśli nie jest to coś co cie interesuje
+    możesz spokojnie przejść dalej.
+  </Note>
+  <Navigation
+    prev={{ name: "Fragment", link: "d" }}
+    next={{ name: "Fragment Plugins", link: "d" }}
+  />
   <!-- ================================================================================================ -->
+  <Title>Fragment in Details</Title>
+  <Description>
+    Fragment pod maską jest bardzo prostym komponentem mającym na celu trzymać
+    modularne pluginy oraz zarządzać nimi. Działa on torche jak game object w
+    Unity. Jest pojemnikiem na funkcjonalność z wygodną w obsłudze formą.
+    Głównym jego zadaniem jest proste dodawanie nowych pluginów do siebie oraz
+    wykonywanie w odpowiednim momencie cyklu game loopu odpowiednich funkcji na
+    swoich pluginach. Funkcjami tymi sa Setup ktory wykonuje się zanim game loop
+    sie jescze zacznie, update ktory co kazda klatke wykonuje obliczenia dla
+    wszystkich swoich pluginów, raz render któy tak samo raz co kazdą klatke
+    rysuje nową wersje wszystkich pluginów mających renderer. Poza zadządzaniem
+    pluginami Fragment jeszcze trzyma postawowe ziemnne z których mogą korzystać
+    wszystkie pluginy, jak pozycja na canvasie czy rozmiar.
+  </Description>
   <Section title="Constructor" desc="Constructor generujący nowy Fragment">
     <CodeSnippet
       code={codeConstructor}
