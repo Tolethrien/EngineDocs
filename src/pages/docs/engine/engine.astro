@@ -1,0 +1,49 @@
+---
+import Description from "../../../components/docs/editor/description.astro";
+import Link from "../../../components/docs/editor/link.astro";
+import Title from "../../../components/docs/editor/title.astro";
+import DocsLayout from "../../../layouts/docsLayout.astro";
+import Text from "../../../components/docs/editor/text.astro";
+import { codeHTML } from "../../../components/codeSnippets/engine";
+import ancors from "../../../quickAcces/linksToPages";
+import Section from "../../../components/docs/editor/section.astro";
+import Heading from "../../../components/docs/editor/heading.astro";
+import CodeSnippet from "../../../components/docs/editor/codeSnippet.astro";
+---
+
+<DocsLayout pageName="Engine">
+  <Title
+    ref="https://github.com/Tolethrien/JS_game_engine_proto/blob/develop/src/Engine/Fragment/Plugins/hitbox.js"
+  >
+    Engine
+  </Title>
+
+  <Description>
+    Engine czyli silnik to główny komponent i serce calego projektu. Jego trzema
+    głównymi składowymi są funkcje preload Setup Update i Render, poza nimi
+    silnik używa pliku konfiguracyjnego mówiącego mu jak ma działać i ak sie
+    zachowywać oraz sam stanowi źródło wielu istotnych elementów używanych
+    podczas całego procesu tworzenia.
+  </Description>
+  <Section title="Punkt wejścia">
+    <Heading>Plik startowy</Heading>
+    <Text>
+      W domyśle silnik używa startPoint.ts jako głównego punktu startowego dla
+      programu. Jest on zlokalizowany w "src" renderera. Jednak jeśli chcemy
+      zmienić nazwę lub przenieśc plik oczywiście możemy to zrobic. Jako iż
+      silnik używa zwyklego elementu Window przegladarki wystarczy wejśc do
+      pliku HTML oraz zmodyfikować punkt startowy:
+    </Text>
+    <CodeSnippet
+      code={codeHTML}
+      fileName={"index.html"}
+      lang={"html"}
+      lineNeutral={"8"}
+    />
+  </Section>
+  <Section title="Globalne listy">gameobjects ui itp</Section>
+  <Section title="Reszta globalna">fixed time</Section>
+  <Section title="Canvas">canva</Section>
+  <Section title="Game Loop">loop</Section>
+  <Section title="Config">conf</Section>
+</DocsLayout>

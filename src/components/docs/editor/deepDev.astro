@@ -1,0 +1,47 @@
+---
+interface Props {
+  warningOf: string;
+}
+
+const { warningOf } = Astro.props;
+const icon = {
+  pathA:
+    "M12 15H12.01M12 12V9M4.98207 19H19.0179C20.5615 19 21.5233 17.3256 20.7455 15.9923L13.7276 3.96153C12.9558 2.63852 11.0442 2.63852 10.2724 3.96153L3.25452 15.9923C2.47675 17.3256 3.43849 19 4.98207 19Z",
+  widthA: "2",
+  pathB: "",
+  widthB: "0",
+  color: "stroke-rose-300",
+};
+---
+
+<div
+  class="m-4 mx-auto mt-20 h-fit w-full rounded-lg border-y-2 border-l-8 border-r-2 border-y-rose-900 border-l-rose-300 border-r-rose-900 bg-rose-700 p-4 text-rose-300 md:w-3/4"
+>
+  <h2 class={`flex gap-2 text-lg font-bold items-center`}>
+    <svg
+      class="stroke-rose-300"
+      viewBox="0 0 24 24"
+      width={"1.5rem"}
+      fill="none"
+    >
+      <g stroke-width="0"></g>
+      <g stroke-linecap="round" stroke-linejoin="round"></g>
+      <g>
+        <path
+          fill-rule="evenodd"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 15H12.01M12 12V9M4.98207 19H19.0179C20.5615 19 21.5233 17.3256 20.7455 15.9923L13.7276 3.96153C12.9558 2.63852 11.0442 2.63852 10.2724 3.96153L3.25452 15.9923C2.47675 17.3256 3.43849 19 4.98207 19Z"
+        >
+        </path>
+      </g>
+    </svg>
+    Modyfikowanie
+  </h2>
+  <p class="text-base font-medium text-white">
+    Poniżej jest pełny opis {warningOf} dla potrzeb modyfikowania silnika. Nie zalecane
+    jest jednka to robić jeśli nie mamy głębokiej znajomości jego działania lub wyższej
+    potrzeby. Jeśli nie jest to coś co cie interesuje możesz spokojnie przejść dalej.
+  </p>
+</div>

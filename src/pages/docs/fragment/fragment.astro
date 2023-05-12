@@ -26,11 +26,13 @@ import {
   codeVisibleAndUpdated,
   codeDynamicAny,
   codeCodeCastingNotNull,
-} from "../../../components/codeSnippets/fragment";
+} from "../../../components/codeSnippets/snipFragment";
+import ancors from "../../../quickAcces/linksToPages";
 import Heading from "../../../components/docs/editor/heading.astro";
 import Note from "../../../components/docs/editor/note.astro";
 import Navigation from "../../../components/docs/editor/navigation.astro";
 import DeepDive from "../../../components/docs/editor/deepDive.astro";
+import DeepDev from "../../../components/docs/editor/deepDev.astro";
 ---
 
 <DocsLayout pageName="Fragment">
@@ -44,7 +46,7 @@ import DeepDive from "../../../components/docs/editor/deepDive.astro";
     Fragment jest głównym blokiem i budulcem całego silnika. Wszystkie obiekty w
     grze powinny extendować Fragment. Jest on zbudowany w modularny sposób
     pozwalający łatwo przypisywać do niego poszczególne <Link
-      ref="/docs/fragment/plugins"
+      ref={ancors.plugins}
     >
       Pluginy
     </Link>
@@ -65,11 +67,13 @@ import DeepDive from "../../../components/docs/editor/deepDive.astro";
     </Text>
     <CodeSnippet code={codeFragmentInvoke} fileName={"startPoint.ts"} />
     <Text>
-      <Highlighted color={"blue"} text={"pos"} /> - <Link ref="">Vector2D</Link>
+      <Highlighted color={"blue"} text={"pos"} /> - <Link ref={ancors.vec2D}>
+        Vector2D
+      </Link>
       trzymający pozycje(x/y) fragmentu w pixelach na canvasie
     </Text>
     <Text>
-      <Highlighted color={"blue"} text={"size"} /> - <Link ref="">
+      <Highlighted color={"blue"} text={"size"} /> - <Link ref={ancors.vec2D}>
         Vector2D
       </Link> określający rozmiar(width/height) fragmentu w pixelach
     </Text>
@@ -112,23 +116,18 @@ import DeepDive from "../../../components/docs/editor/deepDive.astro";
       - zmienna trzymająca string warstwy. O warstwach więcej niżej.
     </Text>
     <Note title="dodatkowe zmienne" type={"note"}>
-      <Text>
-        Extendowany Fragment można poszerzać o własne zmienne do póki
-        constructor fragmentu w <Highlighted
-          color={"yellow"}
-          text={"super()"}
-        />
-        dostaje zmienne zdefiniowane w <Highlighted
-          color={"green"}
-          text={"FragmentProps"}
-        />
-      </Text>
+      Extendowany Fragment można poszerzać o własne zmienne do póki constructor
+      fragmentu w <Highlighted color={"yellow"} text={"super()"} />
+      dostaje zmienne zdefiniowane w <Highlighted
+        color={"green"}
+        text={"FragmentProps"}
+      />
     </Note>
   </Section>
   <Section title="dodawanie Pluginów">
     <Text>
-      By dodać <Link ref="">Plugin</Link> należy scastować jego typ a następnie wywołać
-      dodawanie pluginu za pomocą funkcji <Highlighted
+      By dodać <Link ref={ancors.plugins}>Plugin</Link> należy scastować jego typ
+      a następnie wywołać dodawanie pluginu za pomocą funkcji <Highlighted
         color={"yellow"}
         text={"this.attachPlugin"}
       />
@@ -147,36 +146,42 @@ import DeepDive from "../../../components/docs/editor/deepDive.astro";
       nazwa do wywoływania pluginu.
     </Text>
     <Text>
-      Po dodaniu <Link ref="">Pluginu</Link> możemy go używać bespośrednio we Fragmencie.
-      Istnieje możliwość dodawania kilku takich samych pluginów do Fragmentu, wtedy
-      jednak każdy z nich musimy nazwać samemu, inaczej nie będziemy w stanie ich
-      wywoływać za pomocą this.
+      Po dodaniu <Link ref={ancors.plugins}>Pluginu</Link> możemy go używać bespośrednio
+      we Fragmencie. Istnieje możliwość dodawania kilku takich samych pluginów do
+      Fragmentu, wtedy jednak każdy z nich musimy nazwać samemu, inaczej nie będziemy
+      w stanie ich wywoływać za pomocą this.
     </Text>
     <DeepDive desc="Nadawanie Typu zmiennej">
-      Ponieważ Typescript uzywa statycznego sprawdzania typowania podczas
-      kompilacji kodu a nie "runTim'u" nie ma możliwiści powiedzenia Fragmentowi
-      jakim typem bedzie dodany póżniej(po stworzeniu constructora) plugin. Stąd
-      by korzystać dalej z zalet TS należy w naszym nowym komponencie samemu
-      zadbać o to by powiedzieć typescriptowi że spodziewamy się takiego i
-      takiego typu na danej zmiennej. Pod maską Fragment używa dynamicznie
-      dodawanej zmiennej z typem <Highlighted color={"green"} text={"Any"} /> by
-      powiedzieć Typescriptowi że może sie spodziewać dodawania do Fragmentu nowych
-      zmiennych z czasem:
+      <Text>
+        Ponieważ Typescript uzywa statycznego sprawdzania typowania podczas
+        kompilacji kodu a nie "runTim'u" nie ma możliwiści powiedzenia
+        Fragmentowi jakim typem bedzie dodany póżniej(po stworzeniu
+        constructora) plugin. Stąd by korzystać dalej z zalet TS należy w naszym
+        nowym komponencie samemu zadbać o to by powiedzieć typescriptowi że
+        spodziewamy się takiego i takiego typu na danej zmiennej. Pod maską
+        Fragment używa dynamicznie dodawanej zmiennej z typem <Highlighted
+          color={"green"}
+          text={"Any"}
+        /> by powiedzieć Typescriptowi że może sie spodziewać dodawania do Fragmentu
+        nowych zmiennych z czasem:
+      </Text>
       <CodeSnippet code={codeDynamicAny} lineNeutral={"4"} />
-      Dlatego by uniknąć <Highlighted color={"green"} text={"Any"} /> należy nową
-      zmienną Scastować, co i tak jest wymagane w Klasowym Typescripcie.<br />
-      Typescript będzie od nas wymagał by powiedzieć mu czy ta zmienna jest wymagana
-      w naszym komponencie czy nie poprzez operator <Highlighted
-        color={"blue"}
-        text={"!"}
-      /> albo <Highlighted color={"blue"} text={"?"} />. Jeśli jesteśmy pewni że
-      jakiś Plugin ma byc używany w nszym nowym komponencie możemy śmiało użyć
-      operatora <Highlighted color={"blue"} text={"!"} /> i nie musieć póżniej upewniać
-      się przy kazym użyciu zmiennej czy dany Plugin na pewno istnieje. Jeśli dany
-      Plugin będzzie dodawany kontekstowo używamy operatora <Highlighted
-        color={"blue"}
-        text={"?"}
-      /> i póżniej upewniamy się czy dany plugin istnieje.
+      <Text>
+        Dlatego by uniknąć <Highlighted color={"green"} text={"Any"} /> należy nową
+        zmienną Scastować, co i tak jest wymagane w Klasowym Typescripcie.<br />
+        Typescript będzie od nas wymagał by powiedzieć mu czy ta zmienna jest wymagana
+        w naszym komponencie czy nie poprzez operator <Highlighted
+          color={"blue"}
+          text={"!"}
+        /> albo <Highlighted color={"blue"} text={"?"} />. Jeśli jesteśmy pewni
+        że jakiś Plugin ma byc używany w nszym nowym komponencie możemy śmiało
+        użyć operatora <Highlighted color={"blue"} text={"!"} /> i nie musieć póżniej
+        upewniać się przy kazym użyciu zmiennej czy dany Plugin na pewno istnieje.
+        Jeśli dany Plugin będzzie dodawany kontekstowo używamy operatora <Highlighted
+          color={"blue"}
+          text={"?"}
+        /> i póżniej upewniamy się czy dany plugin istnieje.
+      </Text>
       <CodeSnippet
         code={codeCodeCastingNotNull}
         lineSucces={"2,8"}
@@ -205,9 +210,9 @@ import DeepDive from "../../../components/docs/editor/deepDive.astro";
     </Text>
     <Text>
       W bardziej specyficznych przypadkach może pojawić się potrzeba by
-      <Link ref="">Pluginy</Link> działy ze sobą w jakiś nietypowy sposób lub potrzeba
-      dodania niestatndardowych rzeczy do Fragmentu. Można wtedy zextendować funkcję
-      Setup,Update,Redner.
+      <Link ref={ancors.plugins}>Pluginy</Link> działy ze sobą w jakiś nietypowy
+      sposób lub potrzeba dodania niestatndardowych rzeczy do Fragmentu. Można wtedy
+      zextendować funkcję Setup,Update,Redner.
     </Text>
     <CodeSnippet code={codeExtendSTR} fileName={"newComponent.ts"} />
     <Heading>Visible & Updated</Heading>
@@ -217,25 +222,22 @@ import DeepDive from "../../../components/docs/editor/deepDive.astro";
     </Text>
     <Text cut>
       <Highlighted color={"blue"} text={"this.visible"} /> - Fragment będzie renderował
-      bądz nie swoje <Link ref="">Pluginy</Link> w zależności od tej zmiennej, Renderowanie
-      oznacza tylko i wyłacznie wyświetlenie obiektu na canvasie. Obiekt dalej będzie
-      istniał fizycznie w grze! Oznacza to iż jeśli ustawimy ścianę na niewidzialną
-      to gracz dalej będzie mógł sie na niej zablokować mimo iż nic nie widzi.
+      bądz nie swoje <Link ref={ancors.plugins}>Pluginy</Link> w zależności od tej
+      zmiennej, Renderowanie oznacza tylko i wyłacznie wyświetlenie obiektu na canvasie.
+      Obiekt dalej będzie istniał fizycznie w grze! Oznacza to iż jeśli ustawimy
+      ścianę na niewidzialną to gracz dalej będzie mógł sie na niej zablokować mimo
+      iż nic nie widzi.
     </Text>
     <Text cut>
       <Highlighted color={"blue"} text={"this.updated"} /> - Fragment będzie/nie
       będzie aktualizował swoich obliczeń. Przestaną działąc zatem wszystkie polegające
-      na obliczeniach <Link ref="">Pluginy</Link> jak ruch postaci, czy np Colidery
-      z obiektami. Warto jednak zaznaczyć że wizualna częśc Fragmentu dalej będzie
-      widoczna w grze.
+      na obliczeniach <Link ref={ancors.plugins}>Pluginy</Link> jak ruch postaci,
+      czy np Colidery z obiektami. Warto jednak zaznaczyć że wizualna częśc Fragmentu
+      dalej będzie widoczna w grze.
     </Text>
+    <CodeSnippet code={codeVisibleAndUpdated} />
   </Section>
-  <Note title="Modyfikowanie" type={"deepDev"}>
-    Poniżej jest pełny opis Fragmentu dla potrzeb modyfikowania silnika. Nie
-    zalecane jest jednka to robić jeśli nie mamy głębokiej znajomości jego
-    działania lub wyższej potrzeby. Jeśli nie jest to coś co cie interesuje
-    możesz spokojnie przejść dalej.
-  </Note>
+  <DeepDev warningOf="Fragmentu" />
   <Navigation
     prev={{ name: "Fragment", link: "d" }}
     next={{ name: "Fragment Plugins", link: "d" }}
@@ -262,12 +264,16 @@ import DeepDive from "../../../components/docs/editor/deepDive.astro";
       lineNeutral={"1"}
     />
     <Text>
-      <Highlighted color={"blue"} text={"this.position"} /> - <Link ref="">
+      <Highlighted color={"blue"} text={"this.position"} /> - <Link
+        ref={ancors.vec2D}
+      >
         Vector2D
       </Link> trzymający pozycje(x/y) fragmentu w pixelach na canvasie
     </Text>
     <Text>
-      <Highlighted color={"blue"} text={"this.size"} /> - <Link ref="">
+      <Highlighted color={"blue"} text={"this.size"} /> - <Link
+        ref={ancors.vec2D}
+      >
         Vector2D
       </Link> określający rozmiar(width/height) fragmentu w pixelach
     </Text>
@@ -386,8 +392,8 @@ import DeepDive from "../../../components/docs/editor/deepDive.astro";
     />
     <Text>Dodawanie nowego pluginu wykonywane jest w kilku krokach:</Text>
     <Text>
-      - Funkcja znajduje na <Link ref="s">liscie pluginów</Link> ten który odpowiada
-      nazwie podanej jako Parametr <Highlighted
+      - Funkcja znajduje na <Link ref={ancors.plugins}>liscie pluginów</Link> ten
+      który odpowiada nazwie podanej jako Parametr <Highlighted
         color={"blue"}
         text={"plugin"}
       />.

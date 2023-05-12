@@ -7,9 +7,17 @@ interface Props {
   lineSucces?: string;
   wordMark?: string[];
   fileName?: string;
+  lang?: "html" | "typescript" | "json";
 }
-const { code, lineNeutral, lineSucces, lineWarning, wordMark, fileName } =
-  Astro.props;
+const {
+  code,
+  lineNeutral,
+  lineSucces,
+  lineWarning,
+  wordMark,
+  fileName,
+  lang = "typescript",
+} = Astro.props;
 
 const lineMarker = (str: string | undefined): number[] | undefined => {
   const singleDigit = /^\d$/;
@@ -48,7 +56,7 @@ const succes = lineMarker(lineSucces);
       data-lines-neutral={natural}
       data-word-mark={wordMark ?? undefined}
     >
-      <Code code={code} lang={"typescript"} theme={"dark-plus"} />
+      <Code code={code} lang={lang} theme={"dark-plus"} />
     </code-snippet>
   </div>
 </div>

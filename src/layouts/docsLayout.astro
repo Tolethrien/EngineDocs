@@ -21,16 +21,16 @@ const { pageName } = Astro.props;
   <body class="scrollbar text-slate-100">
     <div class="bodyGradient fixed z-[-1] h-screen w-full"></div>
     <nav
-      class="bodyGradient fixed right-0 z-10 hidden w-full items-center justify-end gap-6 p-6 text-2xl font-extrabold md:flex"
+      class="bodyGradient sticky right-0 top-0 z-10 hidden w-full items-center justify-end gap-6 p-6 text-2xl font-extrabold md:flex"
     >
       <a href="/tutorials/gettingStarted/gettingStarted">Getting started</a>
-      <a href="/docs/engine/options">Docs</a>
+      <a href="/docs/engine/engine">Docs</a>
       <a href="/showcase/start">Showcase</a>
     </nav>
     <MobileTopBar />
     <DesktopAsidePanel />
 
-    <main class="px-4 pt-24 md:ml-56 md:pr-4 lg:px-[15%]">
+    <main class="px-4 md:ml-56 md:pr-4 lg:px-[15%]">
       <slot />
     </main>
   </body>

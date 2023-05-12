@@ -1,10 +1,10 @@
 ---
 import SearchBox from "../sidebar/searchBox.astro";
-import TableOfContents from "../sidebar/tableOfContents.astro";
+import TableOfContents from "../../../quickAcces/tableOfContents.astro";
 ---
 
 <div
-  class="bodyGradient shadow-m fixed z-10 flex w-full items-center justify-between bg-black p-4 md:hidden"
+  class="bodyGradient shadow-m sticky top-0 z-10 flex w-full items-center justify-between bg-black p-4 md:hidden"
 >
   <div
     id="mobileBarBlur"
@@ -49,7 +49,7 @@ import TableOfContents from "../sidebar/tableOfContents.astro";
         class="mb-4 flex flex-col items-center border-b-2 border-pink-200 py-4 text-lg font-extrabold"
       >
         <a href="/tutorials/gettingStarted/gettingStarted">Getting started</a>
-        <a href="/docs/engine/options">Docs</a>
+        <a href="/docs/engine/engine">Docs</a>
         <a href="/showcase/start">Showcase</a>
       </div>
       <TableOfContents />

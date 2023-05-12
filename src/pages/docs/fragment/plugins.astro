@@ -1,0 +1,216 @@
+---
+import CodeSnippet from "../../../components/docs/editor/codeSnippet.astro";
+import Description from "../../../components/docs/editor/description.astro";
+import Highlighted from "../../../components/docs/editor/highlighted.astro";
+import Link from "../../../components/docs/editor/link.astro";
+import Title from "../../../components/docs/editor/title.astro";
+import Section from "../../../components/docs/editor/section.astro";
+import Text from "../../../components/docs/editor/text.astro";
+import DocsLayout from "../../../layouts/docsLayout.astro";
+import Heading from "../../../components/docs/editor/heading.astro";
+import Note from "../../../components/docs/editor/note.astro";
+import Navigation from "../../../components/docs/editor/navigation.astro";
+import {
+  codeExtendsPlugin,
+  codeUpdateAndRenderExample,
+  codeTypeExtends,
+  codePluginList,
+  codeAbstractClass,
+  codeGlobals,
+} from "../../../components/codeSnippets/snipPlugins";
+import DeepDev from "../../../components/docs/editor/deepDev.astro";
+import ancors from "../../../quickAcces/linksToPages";
+---
+
+<DocsLayout pageName="Plugins">
+  <Title
+    ref="https://github.com/Tolethrien/JS_game_engine_proto/blob/develop/src/Engine/Fragment/Plugins/hitbox.js"
+  >
+    Plugins
+  </Title>
+  <Description>
+    Pluginy to moduły dodawane do <Link ref={ancors.fragment}>Fragmentu</Link> które
+    rozszerzają jego możliwości o nowe rzeczy. Z zasady każda nowa funkcjonalność
+    dodawana do silnika powinna być w formie pluginu wykorzystywanego w odpowiednim
+    komponencie.
+  </Description>
+  <Section title="O pluginach">
+    <Text>
+      Pluginy extendują Klase Plugin która jest jakby blueprintem dla tworzenia
+      nowego pluginu. znajdują się one na liście pluginów skąd są dynamicznie
+      pobierane kiedy <Link ref={ancors.fragment}>Fragment</Link> tworzy nowy plugin
+      poprzez funckje
+      <Highlighted color={"yellow"} text={".attachPlugin()"} />.
+    </Text>
+  </Section>
+
+  <Section title="Tworzenie nowych pluginów">
+    <Text>
+      Pluginy extendują Abstrakcyjną Klase Plugin która jest jakby blueprintem
+      dla tworzenia nowego pluginu.
+    </Text>
+    <CodeSnippet code={codeExtendsPlugin} />
+    <Text>
+      Do swojego działana Pluginy wymagają kilku parametrów jak <Highlighted
+        color={"blue"}
+        text={"position"}
+      />, <Highlighted color={"blue"} text={"size"} />
+      czy <Highlighted color={"blue"} text={"layer"} /> jednak nie są one nadawane
+      ręcznie. Funkcja <Highlighted color={"yellow"} text={".attachPlugin()"} />
+      nadaje je sama bezpośrednio podczas przypisywania nowych komponentów do <Link
+        ref={ancors.fragment}
+      >
+        Fragmentu
+      </Link>. Są one przekazywane z jego constructora.
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"position"} /> - zmienna dziedziczona bezpośrednio
+      z Fragmentu w którym znajduje sie plugin, jest pozycją Fragmentu na canvasie
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"size"} /> - zmienna dziedzicozona bezpośrednio
+      z Fragmentu w którym znajduje sie plugin. Oznacza jego rozmiar.
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"layer"} /> - zmienna dziedzicozona bezpośrednio
+      z Fragmentu w którym znajduje sie plugin. Określa jego warstwę
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"siblinngs"} /> - lista wszystkich pluginów
+      przypisanych do danego fragmentu, Można jej użyć do dzielenia stanu między
+      komponentami lub do wykonywania na nich działań.
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"referanceName"} /> - zmienna trzymająca
+      nazwe Pluginu. Jeśli nie podana będzie to doslowna nazwa pluginu, jesli zaś
+      zdefiniowana w <Highlighted color={"yellow"} text={".attachPlugin()"} /> jako
+      drugi argument będzie nią ta nazwa. Służy do upewnniania się że Plugin który
+      chcemy użyć to faktycznie ten w przypadku kiedy mielibyśmy np. Dwa <Highlighted
+        color={"green"}
+        text={"Renderery"}
+      />.
+    </Text>
+    <Text>
+      Poza constructorem Abstrakcyjna Klasa Plugin automatycnzie tworzy 3
+      funkcję: <Highlighted color={"yellow"} text={"setup"} />, <Highlighted
+        color={"yellow"}
+        text={"update"}
+      />, <Highlighted color={"yellow"} text={"render"} /> które są wymagane w każdym
+      pluginie do działania. Funkcje te można używać na potrzeby własnych pluginów
+      by dodać do nich odpowiednią funkcjonalność.
+    </Text>
+    <CodeSnippet code={codeUpdateAndRenderExample} />
+    <Note title="Konstrukcja Projektu" type={"note"}>
+      <code>"src/renderer/src/engine/fragment/plugins/"</code><br />
+      Zalecane jest by tworzyć nowe pluginy w folderze z istniejącymi pluginami dla
+      zachowania porządku strukturalnego.
+    </Note>
+    <Text>
+      Po stworzeniu nowego pluginu musimy zacząć od stworzenia z niego <Highlighted
+        color={"green"}
+        text={"Typu"}
+      /> w którym będziemy extandować faktyczną klasę pluginu robiąc z niej <Highlighted
+        color={"green"}
+        text={"Interface"}
+      /> który potem będziemy mogli castować we <Link ref={ancors.fragment}>
+        Fragmencie
+      </Link>
+    </Text>
+    <CodeSnippet code={codeTypeExtends} />
+    <Text>
+      Następnie należy dodać nasz nowy plugin do listy pluginów. Po tej
+      czynności powinniśmy być w stanie zacząć go używać. <Link
+        ref={ancors.fragment}
+      >
+        Fragment,dodawanie pluginów
+      </Link>.
+    </Text>
+  </Section>
+  <Section title="Lista Pluginów">
+    <Text>
+      Lista pluginów jest obiektem trzymającym wszystkie pluginy stworzone na
+      potrzeby silnika. Pluginy te następnie są używane by je dynamicznie
+      dodawać do <Link ref={ancors.fragment}>Fragmentów</Link>. Dodając własny
+      plugin należy go równierz dodać na tej liście jako <Highlighted
+        color={"yellow"}
+        text={"{klucz:obiekt}"}
+      /> ( w praktyce jeśli nie chcemy by nasz plugin miał inną nazwe niż Klasa pluginu
+      wystarczy podać tylko <Highlighted color={"green"} text={"obiekt"} /> dzięki
+      czemu <Highlighted color={"blue"} text={"klucz"} /> o takiej samej nazwie wygenerowany
+      zostanie automatycznie). Pamiętaj że klucz komponentu będzie nazwą używaną
+      do wywoływania go w <Highlighted
+        color={"yellow"}
+        text={".attachPlugin()"}
+      />
+    </Text>
+    <CodeSnippet code={codePluginList} lineSucces="4,10,11" />
+  </Section>
+  <DeepDev warningOf="Pluginu" />
+  <Navigation
+    prev={{ name: "Fragment", link: "d" }}
+    next={{ name: "Fragment Plugins", link: "d" }}
+  />
+  <Title>Plugins in Details</Title>
+  <Heading>Abstrakcyjny Plugin</Heading>
+  <Text>
+    U podstaw pluginu znajduje się Abstrakcyjna klasa Plugin którą extendują
+    wszystkie pluginy:
+  </Text>
+  <CodeSnippet code={codeAbstractClass} />
+  <Text>
+    Upewnia się ona iż każdy plugin bedzie posiadał odpowiednie zmienne oraz
+    funkcje. Ponieważ <Link ref={ancors.fragment}>Fragment</Link> wykonuje <Highlighted
+      color={"yellow"}
+      text={"setup()"}
+    />,<Highlighted color={"yellow"} text={"update()"} /> i <Highlighted
+      color={"yellow"}
+      text={"render()"}
+    /> na każdym komponencie abstrakcyjna klasa tworzy te funkcje z wyprzedzeniem.
+  </Text>
+  <Text>
+    Pobiera też ona <Highlighted color={"blue"} text={"position"} />, <Highlighted
+      color={"blue"}
+      text={"size"}
+    /> oraz <Highlighted color={"blue"} text={"layer"} /> z <Link
+      ref={ancors.fragment}
+    >
+      Fragmentu
+    </Link> i używa jako swoich by zawsze być na bierząco z Fragmentem w któym został
+    stworzony.
+  </Text>
+  <Note type="note" title="Mutowalna natura">
+    Jako iż zarazem <Link ref={ancors.vec2D}>Vec2D</Link> jak i lista pluginów są
+    Listą, przypisanie ich do zmiennych jak <Highlighted
+      color={"blue"}
+      text={"this.position"}
+    /> czy <Highlighted color={"blue"} text={"this.siblings"} /> sprawia że przypisywany
+    jest ich <Highlighted color={"green"} text={"Refference Point"} /> a nie same
+    wartości. Oznacza to iż jeśli zmieni się gdziekolwiek te listy, zostaną one zaktualizowane
+    w każdym miejscu w którym są one używane. Silnik ten bardzo mocno opiera się
+    na Mutowalności obiektów w JavaScripcie i zaleca się używanie go przy większych
+    obliczeniach zamiast używania tak zwanych "shallow copy".
+  </Note>
+  <Heading>Globalne zmienne</Heading>
+  <Text>
+    Pomimo iż pluigny same w sobie powinny być klasami oraz być tylko dodawane
+    do <Link ref={ancors.fragment}>Fragmentu</Link>, nigdy nie konstruowane jako
+    osobne twory często zdarzać sie bedzie ze inne komponenty będą potrzebować
+    dostęp do czegoś co jest powiązane z pluginem. Dobrą opcją wtedy jest
+    stworzenie globalnej zmiennej w naszym pluginie poprzeż stworzenie jej nad
+    komponentem oraz zexportowanie:
+  </Text>
+  <CodeSnippet code={codeGlobals} lineNeutral={"1"} />
+  <Text>
+    Warto jednak zwrócić uwage ze jesli potrzebujesz mieć dostęp do takiej
+    zmiennej po prostu w innych pluginach i tylko pluginach, można spokojnie
+    stworzyć taką zmienną w środku komponentu i ustawić ją na publiczną a
+    następnie uzyskiwać do niej dostęp w innym pluginie poprzez liste <Highlighted
+      color={"blue"}
+      text={"this.siblings"}
+    />.
+  </Text>
+  <Navigation
+    prev={{ name: "Fragment", link: "d" }}
+    next={{ name: "Fragment Plugins", link: "d" }}
+  />
+</DocsLayout>

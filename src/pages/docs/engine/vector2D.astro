@@ -1,0 +1,164 @@
+---
+import CodeSnippet from "../../../components/docs/editor/codeSnippet.astro";
+import Description from "../../../components/docs/editor/description.astro";
+import Highlighted from "../../../components/docs/editor/highlighted.astro";
+import Link from "../../../components/docs/editor/link.astro";
+import Title from "../../../components/docs/editor/title.astro";
+import Section from "../../../components/docs/editor/section.astro";
+import Text from "../../../components/docs/editor/text.astro";
+import DocsLayout from "../../../layouts/docsLayout.astro";
+import Heading from "../../../components/docs/editor/heading.astro";
+import Navigation from "../../../components/docs/editor/navigation.astro";
+import {
+  codeNewVec2D,
+  codeVecAdd,
+  codeVecAddExample,
+  codeVecSub,
+  codeVecSubExample,
+  codeVecDist,
+  codeVecGet,
+  codeVecLength,
+  codeVecNormalize,
+  codeVecScale,
+  codeVecSet,
+  codeVecScaleExapmle,
+} from "../../../components/codeSnippets/snipVec2D";
+import DeepDev from "../../../components/docs/editor/deepDev.astro";
+import ancors from "../../../quickAcces/linksToPages";
+---
+
+<DocsLayout pageName="Vec2D">
+  <Title
+    ref="https://github.com/Tolethrien/JS_game_engine_proto/blob/develop/src/Engine/Fragment/Plugins/hitbox.js"
+  >
+    Vec2D
+  </Title>
+  <Description>
+    Wektor 2D to para liczb rzeczywistych (x, y), która określa kierunek i
+    długość wektora w dwuwymiarowej przestrzeni. Wektory 2D można używać do
+    reprezentowania różnych informacji, takich jak położenie obiektów na
+    płaszczyźnie, prędkości, siły, przyspieszenia, rotacje itp.
+  </Description>
+  <Section title="Tworzenie nowego Wektora">
+    <Text>aby stworzyć nowy wektor wywołujemy:</Text>
+    <CodeSnippet code={codeNewVec2D} />
+    <Text>
+      <Highlighted color={"blue"} text={"X"} /> - pozycja X punktu na canvasie
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"Y"} /> - pozycja Y punktu na canvasie
+    </Text>
+    <Text>
+      Wektor możemy używać do określenia wszelakich 2 punktów. <Link
+        ref={ancors.fragment}
+      >
+        Fragment
+      </Link>
+      wykorzystuje go zarówno do śledzenia położenia komponentu jak i do śledzenia
+      jego wielkości. Dźieki wbudowanym funkcją jak skalowanie czy rotacja łatwo
+      jest manipulować obiektem w kontrolowany sposób.
+    </Text>
+  </Section>
+  <Section title="Funcje Wektora">
+    <Heading>Set</Heading>
+    <Text>
+      Funkcja <Highlighted color={"yellow"} text={".set"} /> nadpisuje oobecny wektor
+      nowymi wartościami
+    </Text>
+    <CodeSnippet code={codeVecSet} />
+    <Text>
+      <Highlighted color={"blue"} text={"X"} /> - pozycja X punktu na canvasie
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"Y"} /> - pozycja Y punktu na canvasie
+    </Text>
+    <Heading>Add</Heading>
+    <Text>
+      Funkcja <Highlighted color={"yellow"} text={".add"} /> dodaje do wektora inny
+      wektor.
+    </Text>
+    <CodeSnippet code={codeVecAdd} />
+    <Text>
+      <Highlighted color={"blue"} text={"vector"} /> - vector może być zarazem innym
+      wectorem lub listą z dwoma punktami <Highlighted
+        color={"blue"}
+        text={"[x,y]"}
+      />
+    </Text>
+    <CodeSnippet code={codeVecAddExample} />
+    <Heading>Sub</Heading>
+    <Text>
+      Funkcja <Highlighted color={"yellow"} text={".sub"} /> odejmuje od wektora
+      inny wektor.
+    </Text>
+    <CodeSnippet code={codeVecSub} />
+    <Text>
+      <Highlighted color={"blue"} text={"vector"} /> - vector może być zarazem innym
+      wectorem lub listą z dwoma punktami <Highlighted
+        color={"blue"}
+        text={"[x,y]"}
+      />
+    </Text>
+    <CodeSnippet code={codeVecSubExample} />
+    <Heading>Get</Heading>
+    <Text>
+      Funkcja <Highlighted color={"yellow"} text={".get"} /> zwraca obiekt zawierający
+      pozycję <Highlighted color={"blue"} text={"x"} /> oraz <Highlighted
+        color={"blue"}
+        text={"y"}
+      /> danego wektora
+    </Text>
+    <CodeSnippet code={codeVecGet} />
+
+    <Heading>Normalize</Heading>
+    <Text>
+      Funkcja <Highlighted color={"yellow"} text={".normalize"} /> służy do normalizacji
+      wektora, czyli przeskalowania jego długości do wartości 1, zachowując jednocześnie
+      jego kierunek.
+    </Text>
+    <CodeSnippet code={codeVecNormalize} />
+    <Heading>Scale</Heading>
+    <Text>
+      Funkcja <Highlighted color={"yellow"} text={".scale"} /> skaluje wektor przez
+      skalar
+    </Text>
+    <CodeSnippet code={codeVecScale} />
+    <Text>
+      <Highlighted color={"blue"} text={"x"} /> - pojedyncza wartość użyta do przeskalowania
+      przez nią zarówno <Highlighted color={"blue"} text={"x"} /> oraz <Highlighted
+        color={"blue"}
+        text={"y"}
+      /> lub skalar punktu <Highlighted color={"blue"} text={"x"} />
+    </Text>
+    <Text>
+      <Highlighted color={"blue"} text={"y"} /> : opcjonalne - skalar dla punktu
+      <Highlighted color={"blue"} text={"y"} />
+    </Text>
+    <CodeSnippet code={codeVecScaleExapmle} />
+    <Heading>Length</Heading>
+    <Text>
+      Funkcja <Highlighted color={"yellow"} text={".length"} /> zwraca długośc wektora
+      na bazie jego punktu <Highlighted color={"blue"} text={"x"} /> oraz <Highlighted
+        color={"blue"}
+        text={"y"}
+      />
+    </Text>
+    <CodeSnippet code={codeVecLength} />
+    <Heading>distanceToOtherVec2D</Heading>
+    <Text>
+      Funkcja <Highlighted color={"yellow"} text={".distanceToOtherVec2D"} /> zwraca
+      odległość do innego wektoru <Highlighted color={"blue"} text={"Vec2D"} />
+    </Text>
+    <CodeSnippet code={codeVecDist} />
+  </Section>
+  <DeepDev warningOf="Vec2D" />
+  <Navigation
+    prev={{ name: "Fragment", link: "d" }}
+    next={{ name: "Fragment Plugins", link: "d" }}
+  />
+  <Title>Vec2D in Details</Title>
+  <Description>
+    Wektor i jego funkcje to podstawowe matematyczne obliczenia i nie ma tu nic
+    niezwykłego ani wymagajego wyjaśnienia :)
+  </Description><br />
+</DocsLayout>
